@@ -8,27 +8,44 @@ CORS(app)
 
 OLLAMA_API_URL = "http://192.168.0.109:11434/api/generate"
 
-WORDS = ["cat", "bicycle", "sun", "apple", "river", "book", "airplane", "tree", "camera", "piano"]
+#WORDS = ["cat", "bicycle", "sun", "apple", "river", "book", "airplane", "tree", "camera", "piano"]
 
-@app.route('/start', methods=['GET'])
+@app.route('/start', methods=['POST'])
 def start_game():
-    word = random.choice(WORDS)
+    data = request.get_json()
+    difficulty = data.get("difficulty", "easy")
 
-    prompt = f"Describe the word '{word}' without saying the word itself. Be clear but not too obvious. Just return the description. Write simple english"
-    
-    response = requests.post(OLLAMA_API_URL, json={
+    # Step 1: Ask the AI to choose a word based on difficulty
+    word_prompt = f"Think of one English noun that is considered {difficulty}. It should be a common word, suitable for a word guessing game. Respond with only the word, nothing else."
+
+    word_response = requests.post(OLLAMA_API_URL, json={
         "model": "llama2",
-        "prompt": prompt,
+        "prompt": word_prompt,
         "stream": False
     })
 
-    description = response.json().get("response", "")
+    word = word_response.json().get("response", "").strip().lower()
+
+    # Step 2: Ask the AI to describe that word
+    description_prompt = f"""Start the response with this exact sentence: 'I have a word in my mind. Let me explain it to you!'
+
+Now describe the word '{word}' in plain and simple English. You are NOT allowed to use the word itself, any part of the word, or any related words that contain the same root or structure, like a riddle. Do NOT use emojis, sound effects (like *giggles* or *squees*), roleplay, jokes, or questions. Do not add personal comments or emotion. Your description must be clear, neutral, and informative.
+
+Only return one short paragraph that helps someone guess the word based on meaning, not language tricks. Follow these instructions exactly."""
+
+    description_response = requests.post(OLLAMA_API_URL, json={
+        "model": "llama2",
+        "prompt": description_prompt,
+        "stream": False
+    })
+
+    description = description_response.json().get("response", "")
 
     return jsonify({"description": description, "answer": word})
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return "APP IS RUNNING"
 
 @app.route('/guess', methods=['POST'])
 def ask_llama():
