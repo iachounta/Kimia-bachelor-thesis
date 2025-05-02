@@ -13,7 +13,7 @@ import { GameService } from '../../services/game.service';
 
       <!-- Difficulty selection -->
       <div *ngIf="!difficultySelected" class="difficulty-select">
-        <label for="difficulty" class="difficulty-label">Select Difficulty:</label>
+        <label for="difficulty" class="difficulty-label">Select difficulty to start the game:</label>
         <div class="difficulty-controls">
           <select id="difficulty" [(ngModel)]="selectedDifficulty" class="difficulty-dropdown">
             <option value="easy">Easy</option>
@@ -45,14 +45,20 @@ import { GameService } from '../../services/game.service';
       </div>
 
       <!-- Buttons: Submit + Get Hint -->
-      <div *ngIf="difficultySelected" class="button-row">
-        <button class="submit-button" (click)="submitGuess()">Submit Guess</button>
-        <button class="hint-button"
-                (click)="getHint()"
-                [disabled]="hints.length >= 3 || score <= 0">
-          Get Hint (-1 point)
-        </button>
-      </div>
+<div *ngIf="difficultySelected" class="button-row">
+  <button class="submit-button" (click)="submitGuess()">Submit Guess</button>
+  <button class="hint-button"
+          (click)="getHint()"
+          [disabled]="hints.length >= 3 || score <= 0"
+          title="You can use up to 3 hints. Each costs 1 point.">
+    Get Hint (-1 point)
+  </button>
+</div>
+
+<!-- Reveal button appears after 3 hints -->
+<div *ngIf="difficultySelected && hints.length >= 3" class="reveal-container">
+  <button class="reveal-button" (click)="revealAnswer()">Reveal Word & Skip</button>
+</div>
 
       <!-- Display hints -->
       <div *ngIf="hints.length" class="hints">
@@ -65,6 +71,9 @@ import { GameService } from '../../services/game.service';
       <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">
         {{ feedback }}
       </div>
+      <div class="back-button">
+  <button (click)="goBack()">Back to Start</button>
+</div>
     </div>
   `,
   styles: [`
@@ -217,6 +226,45 @@ import { GameService } from '../../services/game.service';
       background: #bbf7d0;
       color: #16a34a;
     }
+      .reveal-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.reveal-button {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+  .back-button {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.back-button button {
+  background: #f59e0b;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.back-button button:hover {
+  background: #d97706;
+}
+
+.reveal-button:hover {
+  background-color: #dc2626;
+}
   `]
 })
 export class UserGuessesComponent implements OnInit {
@@ -240,7 +288,15 @@ export class UserGuessesComponent implements OnInit {
     this.difficultySelected = true;
     this.startNewGame();
   }
-
+  revealAnswer() {
+    this.feedback = 'The word was: ' + this.correctWord;
+    this.isCorrect = false;
+    const currentScore = this.score; // Save current score
+    setTimeout(() => {
+      this.startNewGame();
+      this.score = currentScore; // Restore score after new game starts
+    }, 2500);
+  }
   startNewGame() {
     this.gameService.startGame(this.selectedDifficulty).subscribe(response => {
       this.description = response.description;
@@ -270,6 +326,9 @@ export class UserGuessesComponent implements OnInit {
     }
 
     this.userGuess = '';
+  }
+  goBack() {
+    window.location.href = '/';
   }
 
   getHint() {

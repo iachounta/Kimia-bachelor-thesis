@@ -38,6 +38,9 @@ import { GameService } from '../../services/game.service';
       <div *ngIf="feedback" class="feedback">
         {{ feedback }}
       </div>
+      <div class="back-button">
+  <button (click)="goBack()">Back to Start</button>
+</div>
     </div>
   `,
   styles: [`
@@ -124,6 +127,19 @@ import { GameService } from '../../services/game.service';
       background: #fef9c3;
       color: #92400e;
     }
+      .back-button {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.back-button button {
+  background: #f59e0b; /* nice orange for back */
+  color: white;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
   `]
 })
 export class AiGuessesComponent {
@@ -145,7 +161,9 @@ export class AiGuessesComponent {
       this.feedback = '';
     });
   }
-
+  goBack() {
+    window.location.href = '/';
+  }
   handleFeedback(isCorrect: boolean) {
     if (isCorrect) {
       this.feedback = 'Correct! The AI got it!';
