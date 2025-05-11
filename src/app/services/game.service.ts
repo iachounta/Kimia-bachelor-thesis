@@ -23,8 +23,11 @@ export class GameService {
 
   constructor(private http: HttpClient) {}
 
-  startGame(difficulty: string): Observable<GameResponse> {
-    return this.http.post<GameResponse>(`${this.apiUrl}/start`, { difficulty });
+  startGame(difficulty: string, category: string) {
+    return this.http.post<any>(`${this.apiUrl}/start`, {
+      difficulty,
+      category
+    });
   }
 
   makeGuess(description: string): Observable<GuessResponse> {

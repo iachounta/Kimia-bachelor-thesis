@@ -16,26 +16,26 @@ def index():
 def start_game():
     data = request.get_json()
     difficulty = data.get("difficulty", "easy")
+    category = data.get("category", "")
 
     # Prompt to generate word and description
     start_prompt = f"""
-You are a professional word game master. Your task is to set up a guessing challenge based on the difficulty level: {difficulty.upper()}.
+You are a professional word game master. Your task is to set up a guessing challenge based on the difficulty level: {difficulty.upper()} and also based on the chosen category: {category}.
 
-First, select one English noun according to this difficulty:
+First, select one English noun according to this difficulty {difficulty.upper()} in the selected '{category}':
 - Easy: A very common, everyday object or concept (e.g., "cat", "book", "tree").
-- Medium: A less common, slightly abstract, or specialized noun (e.g., "compass", "harbor", "thunder").
+- Medium: A less common, slightly abstract, or specialized noun (e.g., "compass", "thunder").
 - Hard: A rare, complex, or abstract noun (e.g., "astronaut", "mirage", "paradox").
+- choose the word based on the category: For example, if the category is "animals", choose a word related to animals. If the category is "Cities", choose a city name. If the category is "Food", choose a food item.
+Do not explain your choice. Simply remember the word internally. 
 
-Choose a word fitting the difficulty: {difficulty.upper()}.
-
-Do not explain your choice. Simply remember the word internally.
-
-Next, describe the word:
+Next, describe the word without saying the word itself::
 - Start with this sentence: "I have a word in my mind. Let me explain it to you!"
+-You are not allowed to use the word itself, parts of the word, or obvious synonyms.
 - Write a short, clear description without using the word itself, parts of the word, or obvious synonyms.
 - Focus on what the word is, what it does, or where you find it.
 - No emotions,roleplay, questions, or direct hints. With a little bit of fun. 
-- Maximum 3 to 4 sentences. Around 50 words.
+- Minimum 2 sentences, Maximum 3 to 4 sentences. Around 50 words.
 
 Finally, output your result exactly in this JSON format:
 {{"word": "[the word]", "description": "[the description]"}}
@@ -78,10 +78,12 @@ Respond with only one word. Do not explain your reasoning. Do not add extra word
 """
 
     response = requests.post(OLLAMA_API_URL, json={
-        "model": "llama2",
-        "prompt": guess_prompt,
-        "stream": False
-    })
+    "model": "llama2",
+    "prompt": guess_prompt,
+    "stream": False,
+    "temperature": 0.8,  # ToDo: this is added but I'm not sure if it works
+    "top_p": 0.9 # ToDo: this is added but I'm not sure if it works
+})
 
     guess = response.json().get("response", "").strip()
 
@@ -98,10 +100,12 @@ The hint should be slightly cryptic but still understandable. Maximum one short 
 """
 
     response = requests.post(OLLAMA_API_URL, json={
-        "model": "llama2",
-        "prompt": hint_prompt,
-        "stream": False
-    })
+    "model": "llama2",
+    "prompt": hint_prompt,
+    "stream": False,
+    #"temperature": 0.8,  # ToDo: this is added but I'm not sure if it works
+    #"top_p": 0.9 # ToDo: this is added but I'm not sure if it works
+})
 
     hint = response.json().get("response", "").strip()
 
