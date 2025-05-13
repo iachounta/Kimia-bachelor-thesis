@@ -10,84 +10,83 @@ import { Router } from '@angular/router';
   imports: [CommonModule, FormsModule],
   template: `
     <div class="container">
-      <h2>Guess the Word!</h2>
+    <div class="username-banner">
+  Hi {{ username }}!
+</div>
+  <h2>Guess the Word!</h2>
 
-      <!-- Difficulty selection -->
-      <div *ngIf="!difficultySelected" class="difficulty-select">
-        <label for="difficulty" class="difficulty-label">Select difficulty to start the game:</label>
-        <div class="difficulty-controls">
-          <select id="difficulty" [(ngModel)]="selectedDifficulty" class="difficulty-dropdown">
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
-          </select>
-          <button class="start-button" (click)="chooseDifficulty()">Start Game</button>
-        </div>
-      </div>
+  <!-- Show current difficulty and stats -->
+  <div class="difficulty-indicator">
+    Difficulty: <strong>{{ currentDifficulty }}</strong>
+  </div>
 
-      <!-- Show selected difficulty and stats -->
-      <div *ngIf="difficultySelected" class="difficulty-indicator">
-        Difficulty: <strong>{{ selectedDifficulty }}</strong>
-      </div>
+  <div class="answer-tracker">
+    ✅ Correct Answers: {{ correctAnswers }} | ❌ Wrong Answers: {{ wrongAnswers }}
+  </div>
 
-      <div *ngIf="difficultySelected" class="answer-tracker">
-        ✅ Correct Answers: {{ correctAnswers }} | ❌ Wrong Answers: {{ wrongAnswers }}
-      </div>
+  <div class="round-tracker">
+    Round: {{ roundNumber }} / 18
+  </div>
 
-      <div *ngIf="difficultySelected && !gameOver" class="timer">
-        ⏳ Time left: {{ timeLeft }} seconds
-      </div>
+  <div *ngIf="!gameOver" class="timer">
+    ⏳ User Time: {{ timeLeft }} seconds
+  </div>
+  <div *ngIf="!gameOver" class="timer">
+    🤖 AI Time: {{ aiTimeLeft }} seconds
+  </div>
 
-      <!-- Category selection -->
-      <div *ngIf="difficultySelected && !categorySelected && !gameOver" class="category-select">
-        <label style="font-weight: bold; font-size: 1.2rem;">Select a category to start:</label>
-        <ul>
-          <li
-  *ngFor="let category of categories"
-  (click)="selectCategory(category)"
-  [ngClass]="{ 'category-done': categoryUsage[category] === 3 }"
->
-  {{ category }} ({{ 3 - categoryUsage[category] }} left)
-</li>
-        </ul>
-      </div>
+  <!-- Category selection -->
+  <div *ngIf="!categorySelected && !gameOver" class="category-select">
+    <label style="font-weight: bold; font-size: 1.2rem;">Select a category to start:</label>
+    <ul>
+      <li
+        *ngFor="let category of categories"
+        (click)="selectCategory(category)"
+        [ngClass]="{ 'category-done': categoryUsage[category] === 3 }"
+      >
+        {{ category }} ({{ 3 - categoryUsage[category] }} left)
+      </li>
+    </ul>
+  </div>
+  <div *ngIf="isLoading" class="ai-loading">
+  <span class="spinner"></span> Give me a minute, I'm thinking...
+</div>
+  <!-- Word description -->
+  <div *ngIf="categorySelected && !gameOver" class="description">
+    {{ description }}
+  </div>
 
-      <!-- Word description -->
-      <div *ngIf="difficultySelected && categorySelected && !gameOver" class="description">
-        {{ description }}
-      </div>
+  <!-- Guess input -->
+  <div *ngIf="categorySelected && !gameOver" class="guess-input">
+    <input [(ngModel)]="userGuess" placeholder="Enter your guess" (keyup.enter)="submitGuess()">
+  </div>
 
-      <!-- Guess input -->
-      <div *ngIf="difficultySelected && categorySelected && !gameOver" class="guess-input">
-        <input [(ngModel)]="userGuess" placeholder="Enter your guess" (keyup.enter)="submitGuess()">
-      </div>
+  <!-- Buttons -->
+  <div *ngIf="categorySelected && !gameOver" class="button-row">
+    <button class="submit-button" (click)="submitGuess()">Submit Guess</button>
+    <button class="hint-button" (click)="getHint()" [disabled]="hints.length >= 3" title="Up to 3 hints. Each costs 5 seconds.">
+      Get Hint (-5 seconds)
+    </button>
+  </div>
 
-      <!-- Buttons -->
-      <div *ngIf="difficultySelected && categorySelected && !gameOver" class="button-row">
-        <button class="submit-button" (click)="submitGuess()">Submit Guess</button>
-        <button class="hint-button" (click)="getHint()" [disabled]="hints.length >= 3" title="Up to 3 hints. Each costs 5 seconds.">
-          Get Hint (-5 seconds)
-        </button>
-      </div>
+  <!-- Reveal button -->
+  <div *ngIf="categorySelected && hints.length >= 3 && !gameOver" class="reveal-container">
+    <button class="reveal-button" (click)="revealAnswer()">Reveal Word & Skip</button>
+  </div>
 
-      <!-- Reveal button -->
-      <div *ngIf="difficultySelected && categorySelected && hints.length >= 3 && !gameOver" class="reveal-container">
-        <button class="reveal-button" (click)="revealAnswer()">Reveal Word & Skip</button>
-      </div>
+  <!-- Hints -->
+  <div *ngIf="hints.length" class="hints">
+    <div *ngFor="let hint of hints" class="hint">{{ hint }}</div>
+  </div>
 
-      <!-- Hints -->
-      <div *ngIf="hints.length" class="hints">
-        <div *ngFor="let hint of hints" class="hint">{{ hint }}</div>
-      </div>
+  <!-- Feedback -->
+  <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">{{ feedback }}</div>
 
-      <!-- Feedback -->
-      <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">{{ feedback }}</div>
-
-      <!-- Back button -->
-      <div class="back-button">
-        <button (click)="goBack()">Back to Start</button>
-      </div>
-    </div>
+  <!-- Back button -->
+  <div class="back-button">
+    <button (click)="goBack()">Back to Start</button>
+  </div>
+</div>
   `,
   styles: [`
     .container {
@@ -103,6 +102,12 @@ import { Router } from '@angular/router';
       font-weight: 600;
       color: #1e293b;
     }
+      .username-banner {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #334155;
+}
     .difficulty-select {
       margin-bottom: 1.5rem;
     }
@@ -114,6 +119,27 @@ import { Router } from '@angular/router';
       display: flex;
       gap: 1rem;
     }
+      .ai-loading {
+  display: flex;
+  align-items: center;
+  font-style: italic;
+  color: #64748b;
+  margin-bottom: 1rem;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid #cbd5e1;
+  border-top: 2px solid #0ea5e9;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
     .difficulty-dropdown {
       padding: 0.5rem;
       border-radius: 8px;
@@ -235,36 +261,36 @@ export class UserGuessesComponent implements OnInit {
   hints: string[] = [];
   feedback = '';
   isCorrect = false;
-  selectedDifficulty = 'easy';
-  difficultySelected = false;
+
   categories = ['Animals', 'Food', 'Places', 'Cities'];
   selectedCategory = '';
   categorySelected = false;
   categoryUsage: { [key: string]: number } = {
     Animals: 0,
-    Objects: 0,
     Food: 0,
     Places: 0,
-    Cities: 0
+    Cities: 0,
   };
-
-  timeLeft = 150;
+  isLoading = false;
+  timeLeft = 60;
+  aiTimeLeft = 60;
   timer: any;
   gameOver = false;
-
+  username = localStorage.getItem('username') || 'Guest';
   correctAnswers = 0;
   wrongAnswers = 0;
+
+  roundNumber = 1;
+  currentDifficulty = 'easy';
 
   constructor(private gameService: GameService, private router: Router) {}
 
   ngOnInit() {}
 
-  chooseDifficulty() {
-    this.difficultySelected = true;
-    this.categorySelected = false;
-    this.selectedCategory = '';
-    this.gameOver = false;
-    this.timeLeft = 150;
+  getCurrentDifficulty(round: number): string {
+    if (round <= 6) return 'easy';
+    if (round <= 12) return 'medium';
+    return 'hard';
   }
 
   startTimer() {
@@ -289,77 +315,68 @@ export class UserGuessesComponent implements OnInit {
 
   selectCategory(category: string) {
     if (this.gameOver) return;
-  
     if (this.categoryUsage[category] >= 3) {
-      this.feedback = `You've used all 3 words in the "${category}" category. Choose another one.`;
+      this.feedback = `You've used all 3 words in the "${category}" category.`;
       return;
     }
-  
+
     this.selectedCategory = category;
     this.categorySelected = true;
     this.categoryUsage[category]++;
-  
-    // 🎉 Play applause when a category reaches 3
+
     if (this.categoryUsage[category] === 3) {
       this.playApplauseSound();
     }
-  
+
     this.pauseTimer();
     this.startNewGame();
   }
 
   startNewGame() {
     this.description = '';
-    this.gameService.startGame(this.selectedDifficulty, this.selectedCategory).subscribe(response => {
+    this.timeLeft = 60;
+    this.aiTimeLeft = 60;
+
+    this.currentDifficulty = this.getCurrentDifficulty(this.roundNumber);
+    this.isLoading = true;
+    this.gameService.startGame(this.currentDifficulty, this.selectedCategory).subscribe(response => {
       this.description = response.description;
       this.correctWord = response.answer;
       this.hints = [];
       this.feedback = '';
       this.isCorrect = false;
+      this.isLoading = false;
       this.startTimer();
     });
   }
-  checkIfGameWon(): void {
-    const allDone = this.categories.every(category => this.categoryUsage[category] >= 3);
-    if (allDone) {
-      this.playApplauseSound();
-      this.playWinSound();
-      this.router.navigate(['/winner']); // redirect to winner page
-    }
-  }
+
   submitGuess() {
     if (!this.userGuess.trim()) return;
-  
     const guess = this.userGuess.trim().toLowerCase();
     const answer = this.correctWord.trim().toLowerCase();
-  
+
     if (guess === answer) {
       this.correctAnswers++;
-      this.playCorrectSound(); //  play correct sound
+      this.playCorrectSound();
       this.timeLeft += 10;
-      this.feedback = 'Correct! Well done! ⏱️ +10 seconds!';
+      this.feedback = 'Correct! +10 seconds ⏱️';
       this.isCorrect = true;
-  
+
       setTimeout(() => {
         this.categorySelected = false;
         this.selectedCategory = '';
-        this.startNewGame();
-        this.checkIfGameWon(); //  call win check
+        this.roundNumber++;
+        this.checkIfGameWon();
       }, 1500);
-  
     } else {
-      this.wrongAnswers++; // increment wrong guesses
-      this.playWrongSound(); //  play wrong sound
+      this.wrongAnswers++;
+      this.playWrongSound();
       this.timeLeft = Math.max(0, this.timeLeft - 10);
       this.feedback = this.timeLeft === 0
-        ? 'Game Over. AI won! ⏱️ -10 seconds!'
-        : 'Wrong guess, try again! ⏱️ -10 seconds!';
-        if (this.timeLeft === 0) {
-          this.playGameOverSound();
-        }
-      this.isCorrect = false;
+        ? 'Game Over. ⏱️ -10 seconds!'
+        : 'Wrong! Try again ⏱️ -10 seconds!';
     }
-  
+
     this.userGuess = '';
   }
 
@@ -375,34 +392,29 @@ export class UserGuessesComponent implements OnInit {
 
   revealAnswer() {
     this.feedback = 'The word was: ' + this.correctWord;
-    this.isCorrect = false;
     this.categorySelected = false;
     this.selectedCategory = '';
   }
-  playCorrectSound() {
-    const sound = document.getElementById('correct-sound') as HTMLAudioElement;
+
+  checkIfGameWon() {
+    if (this.roundNumber > 18) {
+      this.playApplauseSound();
+      this.playWinSound();
+      this.router.navigate(['/winner']);
+    }
+  }
+
+  playCorrectSound() { this.playAudio('correct-sound'); }
+  playWrongSound() { this.playAudio('wrong-sound'); }
+  playApplauseSound() { this.playAudio('applause-sound'); }
+  playWinSound() { this.playAudio('win-sound'); }
+  playGameOverSound() { this.playAudio('game-over-sound'); }
+
+  playAudio(id: string) {
+    const sound = document.getElementById(id) as HTMLAudioElement;
     if (sound) sound.play();
   }
-  
-  playWrongSound() {
-    const sound = document.getElementById('wrong-sound') as HTMLAudioElement;
-    if (sound) sound.play();
-  }
-  
-  playApplauseSound() {
-    const sound = document.getElementById('applause-sound') as HTMLAudioElement;
-    if (sound) sound.play();
-  }
-  playWinSound() {
-    const sound = document.getElementById('win-sound') as HTMLAudioElement;
-    if (sound) sound.play();
-  }
-  
-  playGameOverSound() {
-    const sound = document.getElementById('game-over-sound') as HTMLAudioElement;
-    if (sound) sound.play();
-  }
-  
+
   goBack() {
     window.location.href = '/';
   }

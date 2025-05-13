@@ -7,8 +7,11 @@ import { UserGuessesComponent } from './app/components/user-guesses/user-guesses
 import { AiGuessesComponent } from './app/components/ai-guesses/ai-guesses.component';
 import { WinnerComponent } from './app/components/winner/winner.component';
 
+import { LoginComponent } from './app/components/login/login.component';
+
 const routes: Routes = [
-  { path: '', component: GameModeSelectionComponent },
+  { path: '', component: LoginComponent },
+  { path: 'mode-selection', component: GameModeSelectionComponent },
   { path: 'user-guesses', component: UserGuessesComponent },
   { path: 'ai-guesses', component: AiGuessesComponent },
   { path: 'winner', component: WinnerComponent }
@@ -18,7 +21,14 @@ const routes: Routes = [
   selector: 'app-root',
   template: `<router-outlet></router-outlet>`,
   standalone: true,
-  imports: [RouterOutlet, GameModeSelectionComponent]
+  imports: [
+    RouterOutlet,
+    LoginComponent,
+    GameModeSelectionComponent,
+    UserGuessesComponent,
+    AiGuessesComponent,
+    WinnerComponent
+  ]
 })
 export class App {}
 

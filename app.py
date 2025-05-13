@@ -23,9 +23,9 @@ def start_game():
 You are a professional word game master. Your task is to set up a guessing challenge based on the difficulty level: {difficulty.upper()} and also based on the chosen category: {category}.
 
 First, select one English noun according to this difficulty {difficulty.upper()} in the selected '{category}':
-- Easy: A very common, everyday object or concept (e.g., "cat", "book", "tree").
-- Medium: A less common, slightly abstract, or specialized noun (e.g., "compass", "thunder").
-- Hard: A rare, complex, or abstract noun (e.g., "astronaut", "mirage", "paradox").
+- Easy: A very common, everyday object or concept.
+- Medium: A less common, slightly abstract, or specialized noun.
+- Hard: A rare, complex, or abstract noun.
 - choose the word based on the category: For example, if the category is "animals", choose a word related to animals. If the category is "Cities", choose a city name. If the category is "Food", choose a food item.
 Do not explain your choice. Simply remember the word internally. 
 
