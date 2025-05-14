@@ -18,7 +18,7 @@ export class LoginComponent {
   startGame() {
     if (this.username.trim()) {
       localStorage.setItem('username', this.username.trim());
-      this.router.navigate(['/mode-selection']);
+      this.router.navigate(['/game']);
     }
   }
 }

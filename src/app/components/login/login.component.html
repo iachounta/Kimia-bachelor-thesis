@@ -1,6 +1,31 @@
-<div class="login-container">
-  <h2>Welcome to the Word Game</h2>
-  <label for="username">Enter your name to start:</label>
-  <input id="username" [(ngModel)]="username" placeholder="Your name" />
-  <button (click)="startGame()">Start Game</button>
+<div class="login-wrapper">
+  <div class="login-container">
+    <h2>Welcome to the Word Game</h2>
+    <label for="username">Enter your name to start:</label>
+    <input id="username" [(ngModel)]="username" placeholder="Your name" />
+    <button (click)="startGame()">Start Game</button>
+  </div>
+
+  <div class="game-rules">
+    <h3>📜 Game Rules</h3>
+    <ul>
+      <li>
+        The game has <strong>3 difficulty levels</strong>: Easy, Medium, Hard.
+      </li>
+      <li>Each level has <strong>6 rounds</strong>.</li>
+      <li>
+        <strong>Rounds 1–3</strong>: You describe random words. The AI tries to
+        guess.
+      </li>
+      <li>
+        <strong>Rounds 4–6</strong>: The AI describes a word. You try to guess.
+      </li>
+      <li>You and the AI each start with <strong>60 seconds</strong>.</li>
+      <li>Time runs only on the active player's turn.</li>
+      <li><strong>Wrong answers:</strong> -10 seconds</li>
+      <li><strong>Hint usage:</strong> -5 seconds</li>
+      <li>If your time runs out, the game ends immediately.</li>
+      <li>The winner is the one with more time left at the end!</li>
+    </ul>
+  </div>
 </div>

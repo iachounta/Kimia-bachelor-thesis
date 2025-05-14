@@ -1,15 +1,25 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../../services/game.service';
+import { GameHeaderComponent } from '../shared/game-header/game-header.component';
 
 @Component({
   selector: 'app-ai-guesses',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, GameHeaderComponent],
   template: `
     <div class="container">
-      <h2>AI Guesses Your Word</h2>
+  <h2>AI Guesses Your Word</h2> <!-- this was missing -->
+  <app-game-header
+    [username]="username"
+    [round]="roundNumber"
+    [difficulty]="currentDifficulty"
+    [correctAnswers]="correctAnswers"
+    [wrongAnswers]="wrongAnswers"
+    [userTimeLeft]="userTimeLeft"
+    [aiTimeLeft]="aiTimeLeft"
+  />
       <div class="score">Score: {{ score }}</div>
 
       <div class="description-input">
@@ -38,6 +48,10 @@ import { GameService } from '../../services/game.service';
       <div *ngIf="feedback" class="feedback">
         {{ feedback }}
       </div>
+      <div *ngIf="wrongGuesses >= 2 && hintUsed < 3">
+  <textarea [(ngModel)]="userHint" placeholder="Provide a hint for the AI..."></textarea>
+  <button (click)="submitHint()">Submit Hint</button>
+</div>
       <div class="back-button">
   <button (click)="goBack()">Back to Start</button>
 </div>
@@ -149,6 +163,15 @@ export class AiGuessesComponent {
   score = 6;
   feedback = '';
   showHintInput = false;
+  username = localStorage.getItem('username') || 'Guest';
+  @Input() roundNumber: number = 1;
+currentDifficulty = 'easy';
+correctAnswers = 0;
+wrongGuesses = 0;
+hintUsed = 0;
+userTimeLeft = 60;
+aiTimeLeft = 60;
+correctWord = '';
 
   constructor(private gameService: GameService) {}
 
@@ -165,30 +188,35 @@ export class AiGuessesComponent {
     window.location.href = '/';
   }
   handleFeedback(isCorrect: boolean) {
-    if (isCorrect) {
-      this.feedback = 'Correct! The AI got it!';
-      this.score += 2;
-      this.aiGuess = '';
-      this.userDescription = '';
-      this.showHintInput = false;
-    } else {
-      this.score = Math.max(0, this.score - 1);
-      if (this.score === 0) {
-        this.feedback = 'Game Over. You won!';
-      } else {
-        this.feedback = 'Wrong guess from the AI.';
-        this.showHintInput = true;
-      }
+  if (isCorrect) {
+    this.feedback = 'Correct! The AI got it!';
+    this.score += 2;
+    this.aiGuess = '';
+    this.userDescription = '';
+    this.showHintInput = false;
+  } else {
+    this.wrongGuesses++; // Increment wrong guesses
+    this.score = Math.max(0, this.score - 1);
+    if (this.wrongGuesses >= 2 && this.hintUsed < 3) {
+      this.feedback = 'Wrong guess from the AI. Provide a hint.';
+      this.showHintInput = true; // Show hint input after 2 wrong guesses
     }
+    if (this.hintUsed >= 3) {
+      this.feedback = `The correct word was: ${this.correctWord}`;
+    }
+  }
+
   }
 
   submitHint() {
     if (!this.userHint.trim()) return;
-
-    this.score = Math.max(0, this.score - 1);
-    this.userDescription += ' ' + this.userHint;
-    this.showHintInput = false;
-    this.userHint = '';
+  
+    this.hintUsed++;
+    this.aiGuess += ' ' + this.userHint;  // Add hint to AI's guess
+    this.userHint = '';  // Reset the hint input
+    this.showHintInput = false;  // Hide hint box
+  
+    // After the hint, submit the description to continue
     this.submitDescription();
   }
 }

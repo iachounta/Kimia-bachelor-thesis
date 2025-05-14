@@ -1,39 +1,24 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../../services/game.service';
 import { Router } from '@angular/router';
-
+import { GameHeaderComponent } from '../shared/game-header/game-header.component';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-user-guesses',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, GameHeaderComponent],
   template: `
     <div class="container">
-    <div class="username-banner">
-  Hi {{ username }}!
-</div>
-  <h2>Guess the Word!</h2>
-
-  <!-- Show current difficulty and stats -->
-  <div class="difficulty-indicator">
-    Difficulty: <strong>{{ currentDifficulty }}</strong>
-  </div>
-
-  <div class="answer-tracker">
-    ✅ Correct Answers: {{ correctAnswers }} | ❌ Wrong Answers: {{ wrongAnswers }}
-  </div>
-
-  <div class="round-tracker">
-    Round: {{ roundNumber }} / 18
-  </div>
-
-  <div *ngIf="!gameOver" class="timer">
-    ⏳ User Time: {{ timeLeft }} seconds
-  </div>
-  <div *ngIf="!gameOver" class="timer">
-    🤖 AI Time: {{ aiTimeLeft }} seconds
-  </div>
+    <app-game-header
+  [username]="username"
+  [round]="roundNumber"
+  [difficulty]="currentDifficulty"
+  [correctAnswers]="correctAnswers"
+  [wrongAnswers]="wrongAnswers"
+  [userTimeLeft]="timeLeft"
+  [aiTimeLeft]="aiTimeLeft"
+/>
 
   <!-- Category selection -->
   <div *ngIf="!categorySelected && !gameOver" class="category-select">
@@ -75,9 +60,9 @@ import { Router } from '@angular/router';
   </div>
 
   <!-- Hints -->
-  <div *ngIf="hints.length" class="hints">
-    <div *ngFor="let hint of hints" class="hint">{{ hint }}</div>
-  </div>
+  <button *ngIf="wrongAnswers >= 2 && hintUsed < 3" (click)="getHint()" [disabled]="hintUsed >= 3" title="Up to 3 hints. Each costs 5 seconds">
+  Get Hint (-5 seconds)
+</button>
 
   <!-- Feedback -->
   <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">{{ feedback }}</div>
@@ -254,6 +239,7 @@ import { Router } from '@angular/router';
     }
   `]
 })
+
 export class UserGuessesComponent implements OnInit {
   description = '';
   userGuess = '';
@@ -279,8 +265,9 @@ export class UserGuessesComponent implements OnInit {
   username = localStorage.getItem('username') || 'Guest';
   correctAnswers = 0;
   wrongAnswers = 0;
-
-  roundNumber = 1;
+  hintUsed = 0; // Track how many hints were used
+  @Input() roundNumber: number = 1;
+  @Output() roundCompleted = new EventEmitter<void>();
   currentDifficulty = 'easy';
 
   constructor(private gameService: GameService, private router: Router) {}
@@ -336,10 +323,11 @@ export class UserGuessesComponent implements OnInit {
     this.description = '';
     this.timeLeft = 60;
     this.aiTimeLeft = 60;
-
-    this.currentDifficulty = this.getCurrentDifficulty(this.roundNumber);
+  
+    const currentDifficulty = this.getCurrentDifficulty(this.roundNumber);
     this.isLoading = true;
-    this.gameService.startGame(this.currentDifficulty, this.selectedCategory).subscribe(response => {
+  
+    this.gameService.startGame(currentDifficulty, this.selectedCategory).subscribe(response => {
       this.description = response.description;
       this.correctWord = response.answer;
       this.hints = [];
@@ -362,11 +350,11 @@ export class UserGuessesComponent implements OnInit {
       this.feedback = 'Correct! +10 seconds ⏱️';
       this.isCorrect = true;
 
+
       setTimeout(() => {
         this.categorySelected = false;
         this.selectedCategory = '';
-        this.roundNumber++;
-        this.checkIfGameWon();
+        this.roundCompleted.emit();
       }, 1500);
     } else {
       this.wrongAnswers++;
@@ -381,17 +369,26 @@ export class UserGuessesComponent implements OnInit {
   }
 
   getHint() {
-    if (this.hints.length < 3) {
-      this.gameService.getHint(this.correctWord).subscribe(response => {
-        this.hints.push(response.hint);
-        this.timeLeft = Math.max(0, this.timeLeft - 5);
-        this.feedback = 'Hint used ⏱️ -5 seconds!';
-      });
+    if (this.hintUsed < 3) {
+      this.hintUsed++;
+      // Logic for showing hint
+      // Update score and give feedback if necessary
+    } else {
+      this.revealAnswer();
     }
   }
 
   revealAnswer() {
-    this.feedback = 'The word was: ' + this.correctWord;
+    if (this.hintUsed >= 3) {
+      this.feedback = `The correct word was: ${this.correctWord}`;
+    } else {
+      this.feedback = 'Incorrect! Try again or get a hint.';
+    }
+  
+    // Emit the event to notify the parent that the round is over
+    this.roundCompleted.emit();
+  
+    // End round or skip to the next word
     this.categorySelected = false;
     this.selectedCategory = '';
   }

@@ -1,1 +1,13 @@
-<p>game-header works!</p>
+<div class="game-header">
+  <p class="username">
+    👋 Hi <strong>{{ username }}</strong
+    >!
+  </p>
+  <h2>🎯 Guess the Word!</h2>
+
+  <p><strong>Difficulty:</strong> {{ difficulty }}</p>
+  <p>✅ Correct: {{ correctAnswers }} | ❌ Wrong: {{ wrongAnswers }}</p>
+  <p>🔄 Round: {{ round }} / 18</p>
+  <p>⏳ User Time: {{ userTimeLeft }}s</p>
+  <p>🤖 AI Time: {{ aiTimeLeft }}s</p>
+</div>

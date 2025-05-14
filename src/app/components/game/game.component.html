@@ -1,0 +1,17 @@
+<div class="game-container">
+  <h2>Round {{ roundNumber }} / 18 — {{ currentDifficulty | titlecase }}</h2>
+
+  <ng-container *ngIf="isUserTurn; else aiTurn">
+    <app-ai-guesses
+      [roundNumber]="roundNumber"
+      (roundCompleted)="nextRound()"
+    ></app-ai-guesses>
+  </ng-container>
+
+  <ng-template #aiTurn>
+    <app-user-guesses
+      [roundNumber]="roundNumber"
+      (roundCompleted)="nextRound()"
+    ></app-user-guesses>
+  </ng-template>
+</div>
