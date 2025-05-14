@@ -1,0 +1,88 @@
+<div class="container">
+  <app-game-header
+    [username]="username"
+    [round]="roundNumber"
+    [difficulty]="currentDifficulty"
+    [correctAnswers]="correctAnswers"
+    [wrongAnswers]="wrongAnswers"
+    [userTimeLeft]="timeLeft"
+    [aiTimeLeft]="aiTimeLeft"
+  ></app-game-header>
+
+  <!-- Category selection -->
+  <div *ngIf="!categorySelected && !gameOver" class="category-select">
+    <label style="font-weight: bold; font-size: 1.2rem">
+      Select a category to start:
+    </label>
+    <ul>
+      <li
+        *ngFor="let category of categories"
+        (click)="selectCategory(category)"
+        [ngClass]="{ 'category-done': categoryUsage[category] === 3 }"
+      >
+        {{ category }} ({{ 3 - categoryUsage[category] }} left)
+      </li>
+    </ul>
+  </div>
+
+  <div *ngIf="isLoading" class="ai-loading">
+    <span class="spinner"></span> Give me a minute, I’m thinking...
+  </div>
+
+  <!-- Word description -->
+  <div *ngIf="categorySelected && !gameOver" class="description">
+    {{ description }}
+  </div>
+
+  <!-- Guess input -->
+  <div *ngIf="categorySelected && !gameOver" class="guess-input">
+    <input
+      [(ngModel)]="userGuess"
+      placeholder="Enter your guess"
+      (keyup.enter)="submitGuess()"
+    />
+  </div>
+
+  <!-- Buttons -->
+  <div *ngIf="categorySelected && !gameOver" class="button-row">
+    <button class="submit-button" (click)="submitGuess()">Submit Guess</button>
+    <button
+      class="hint-button"
+      (click)="getHint()"
+      [disabled]="hints.length >= 3"
+      title="Up to 3 hints. Each costs 5 seconds."
+    >
+      Get Hint (-5 seconds)
+    </button>
+  </div>
+
+  <!-- Reveal button -->
+  <div
+    *ngIf="categorySelected && hints.length >= 3 && !gameOver"
+    class="reveal-container"
+  >
+    <button class="reveal-button" (click)="revealAnswer()">
+      Reveal Word & Skip
+    </button>
+  </div>
+
+  <!-- Hints (alternate) -->
+  <button
+    *ngIf="wrongAnswers >= 2 && hintUsed < 3"
+    (click)="getHint()"
+    [disabled]="hintUsed >= 3"
+    title="Up to 3 hints. Each costs 5 seconds"
+  >
+    Get Hint (-5 seconds)
+  </button>
+
+  <!-- Feedback -->
+  <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">
+    {{ feedback }}
+  </div>
+
+  <!-- Back button -->
+  <div class="back-button">
+    <button (click)="goBack()">Back to Start</button>
+  </div>
+</div>

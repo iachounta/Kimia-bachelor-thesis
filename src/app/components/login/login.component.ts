@@ -1,24 +1,24 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { Component } from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { Router } from "@angular/router";
+import { FormsModule } from "@angular/forms";
 
 @Component({
-  selector: 'app-login',
+  selector: "app-login",
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.css"],
 })
 export class LoginComponent {
-  username = '';
+  username = "";
 
   constructor(private router: Router) {}
 
   startGame() {
     if (this.username.trim()) {
-      localStorage.setItem('username', this.username.trim());
-      this.router.navigate(['/game']);
+      localStorage.setItem("username", this.username.trim());
+      this.router.navigate(["/game"]);
     }
   }
 }

@@ -1,0 +1,58 @@
+<div class="container">
+  <h2>AI Guesses Your Word</h2>
+
+  <app-game-header
+    [username]="username"
+    [round]="roundNumber"
+    [difficulty]="currentDifficulty"
+    [correctAnswers]="correctAnswers"
+    [wrongAnswers]="wrongGuesses"
+    [userTimeLeft]="userTimeLeft"
+    [aiTimeLeft]="aiTimeLeft"
+  ></app-game-header>
+
+  <div class="description-input">
+    <textarea
+      [(ngModel)]="userDescription"
+      placeholder="Describe your word for the AI to guess..."
+      rows="4"
+    ></textarea>
+    <button (click)="submitDescription()">Let AI Guess</button>
+  </div>
+
+  <div *ngIf="aiGuess" class="ai-guess">
+    AI's guess: <span class="guess">{{ aiGuess }}</span>
+  </div>
+
+  <div *ngIf="aiGuess" class="feedback-buttons">
+    <button class="correct-btn" (click)="handleFeedback(true)">Correct!</button>
+    <button class="hint-btn" (click)="handleFeedback(false)">
+      Wrong, provide hint
+    </button>
+  </div>
+
+  <div *ngIf="showHintInput" class="hint-input">
+    <textarea
+      [(ngModel)]="userHint"
+      placeholder="Provide a hint for the AI..."
+      rows="2"
+    ></textarea>
+    <button (click)="submitHint()">Submit Hint</button>
+  </div>
+
+  <div *ngIf="feedback" class="feedback">
+    {{ feedback }}
+  </div>
+
+  <div *ngIf="wrongGuesses >= 2 && hintUsed < 3">
+    <textarea
+      [(ngModel)]="userHint"
+      placeholder="Provide a hint for the AI..."
+    ></textarea>
+    <button (click)="submitHint()">Submit Hint</button>
+  </div>
+
+  <div class="back-button">
+    <button (click)="goBack()">Back to Start</button>
+  </div>
+</div>
