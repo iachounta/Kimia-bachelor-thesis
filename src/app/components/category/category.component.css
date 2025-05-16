@@ -1,0 +1,17 @@
+.category-select ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-select li {
+  cursor: pointer;
+  padding: 0.5rem;
+  margin: 0.25rem 0;
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+.category-done {
+  background-color: #d9f99d !important; /* light green */
+  font-weight: bold;
+}

@@ -11,6 +11,7 @@
   <ng-template #aiTurn>
     <app-user-guesses
       [roundNumber]="roundNumber"
+      [categoryUsage]="userGuessCategoryUsage"
       (roundCompleted)="nextRound()"
     ></app-user-guesses>
   </ng-template>

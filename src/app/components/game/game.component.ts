@@ -11,7 +11,23 @@ import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add 
   styleUrls: ["./game.component.css"],
 })
 export class GameComponent {
-  roundNumber = 1;
+  categories: string[] = ["Animals", "Food", "Places"];
+
+  userGuessCategoryUsage: { [key: string]: number } = {
+    Animals: 0,
+    Food: 0,
+    Places: 0,
+  };
+
+  aiGuessCategoryUsage: { [key: string]: number } = {
+    Animals: 0,
+    Food: 0,
+    Places: 0,
+  };
+
+  CATEGORY_LIMIT = 3;
+
+  roundNumber = 4;
 
   get currentDifficulty(): string {
     if (this.roundNumber <= 6) return "easy";

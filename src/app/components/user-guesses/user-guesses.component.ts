@@ -4,11 +4,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Router } from "@angular/router";
 import { GameService } from "../../services/game.service";
 import { GameHeaderComponent } from "../shared/game-header/game-header.component";
+import { CategoryComponent } from "../category/category.component";
 
 @Component({
   selector: "app-user-guesses",
   standalone: true,
-  imports: [CommonModule, FormsModule, GameHeaderComponent],
+  imports: [CommonModule, FormsModule, GameHeaderComponent, CategoryComponent],
   templateUrl: "./user-guesses.component.html",
   styleUrls: ["./user-guesses.component.css"],
 })
@@ -20,14 +21,12 @@ export class UserGuessesComponent implements OnInit {
   feedback = "";
   isCorrect = false;
 
-  categories = ["Animals", "Food", "Places", "Cities"];
-  selectedCategory = "";
-  categorySelected = false;
-  categoryUsage: { [key: string]: number } = {
+  categories = ["Animals", "Food", "Places"];
+  @Input() currentCategory: string = "";
+  @Input() categoryUsage: { [key: string]: number } = {
     Animals: 0,
     Food: 0,
     Places: 0,
-    Cities: 0,
   };
   isLoading = false;
   timeLeft = 60;
@@ -73,21 +72,9 @@ export class UserGuessesComponent implements OnInit {
     }
   }
 
-  selectCategory(category: string) {
-    if (this.gameOver) return;
-    if (this.categoryUsage[category] >= 3) {
-      this.feedback = `You've used all 3 words in the "${category}" category.`;
-      return;
-    }
-
-    this.selectedCategory = category;
-    this.categorySelected = true;
-    this.categoryUsage[category]++;
-
-    if (this.categoryUsage[category] === 3) {
-      this.playApplauseSound();
-    }
-
+  onCategorySelected(category: string) {
+    console.log("Selected category:", category);
+    this.currentCategory = category;
     this.pauseTimer();
     this.startNewGame();
   }
@@ -101,7 +88,7 @@ export class UserGuessesComponent implements OnInit {
     this.isLoading = true;
 
     this.gameService
-      .startGame(currentDifficulty, this.selectedCategory)
+      .startGame(currentDifficulty, this.currentCategory)
       .subscribe((response) => {
         this.description = response.description;
         this.correctWord = response.answer;
@@ -126,8 +113,7 @@ export class UserGuessesComponent implements OnInit {
       this.isCorrect = true;
 
       setTimeout(() => {
-        this.categorySelected = false;
-        this.selectedCategory = "";
+        this.currentCategory = "";
         this.roundCompleted.emit();
       }, 1500);
     } else {
@@ -160,8 +146,7 @@ export class UserGuessesComponent implements OnInit {
     }
 
     this.roundCompleted.emit();
-    this.categorySelected = false;
-    this.selectedCategory = "";
+    this.currentCategory = "";
   }
 
   checkIfGameWon() {
