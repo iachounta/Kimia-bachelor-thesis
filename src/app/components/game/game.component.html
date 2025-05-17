@@ -12,7 +12,9 @@
     <app-user-guesses
       [roundNumber]="roundNumber"
       [categoryUsage]="userGuessCategoryUsage"
+      [userGuessTimeLeft]="userGuessTimeLeft"
       (roundCompleted)="nextRound()"
+      (timerChanged)="onTimerChanged($event)"
     ></app-user-guesses>
   </ng-template>
 </div>

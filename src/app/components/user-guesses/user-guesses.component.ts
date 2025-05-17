@@ -29,8 +29,12 @@ export class UserGuessesComponent implements OnInit {
     Places: 0,
   };
   isLoading = false;
-  timeLeft = 60;
-  aiTimeLeft = 60;
+  @Input() userGuessTimeLeft = 60;
+  @Input() aiGuessTimeLeft = 60;
+  @Output() timerChanged = new EventEmitter<{
+    userGuessTimeDiff?: number;
+    aiGuessTimeDiff?: number;
+  }>();
   timer: any;
   gameOver = false;
   username = localStorage.getItem("username") || "Guest";
@@ -54,9 +58,12 @@ export class UserGuessesComponent implements OnInit {
 
   startTimer() {
     if (this.timer) clearInterval(this.timer);
+    console.log("Time left:", this.userGuessTimeLeft);
+
     this.timer = setInterval(() => {
-      if (this.timeLeft > 0) {
-        this.timeLeft--;
+      if (this.userGuessTimeLeft > 0) {
+        console.log("Time left:", this.userGuessTimeLeft);
+        this.timerChanged.emit({ userGuessTimeDiff: -1 });
       } else {
         clearInterval(this.timer);
         this.gameOver = true;
@@ -81,8 +88,6 @@ export class UserGuessesComponent implements OnInit {
 
   startNewGame() {
     this.description = "";
-    this.timeLeft = 60;
-    this.aiTimeLeft = 60;
 
     const currentDifficulty = this.getCurrentDifficulty(this.roundNumber);
     this.isLoading = true;
@@ -108,7 +113,7 @@ export class UserGuessesComponent implements OnInit {
     if (guess === answer) {
       this.correctAnswers++;
       this.playCorrectSound();
-      this.timeLeft += 10;
+      this.timerChanged.emit({ userGuessTimeDiff: 10 });
       this.feedback = "Correct! +10 seconds ⏱️";
       this.isCorrect = true;
 
@@ -119,9 +124,9 @@ export class UserGuessesComponent implements OnInit {
     } else {
       this.wrongAnswers++;
       this.playWrongSound();
-      this.timeLeft = Math.max(0, this.timeLeft - 10);
+      this.timerChanged.emit({ userGuessTimeDiff: -10 });
       this.feedback =
-        this.timeLeft === 0
+        this.userGuessTimeLeft === 0
           ? "Game Over. ⏱️ -10 seconds!"
           : "Wrong! Try again ⏱️ -10 seconds!";
     }

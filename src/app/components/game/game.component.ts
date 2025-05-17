@@ -11,6 +11,8 @@ import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add 
   styleUrls: ["./game.component.css"],
 })
 export class GameComponent {
+  userGuessTimeLeft = 60;
+  aiGuessTimeLeft = 60;
   categories: string[] = ["Animals", "Food", "Places"];
 
   userGuessCategoryUsage: { [key: string]: number } = {
@@ -44,6 +46,22 @@ export class GameComponent {
       this.roundNumber++;
     } else {
       // route to winner or summary screen
+    }
+  }
+
+  onTimerChanged(event: {
+    userGuessTimeDiff?: number;
+    aiGuessTimeDiff?: number;
+  }): void {
+    console.log("Timer changed event:", event);
+    if (event.userGuessTimeDiff !== undefined) {
+      //TODO: Check time not negative
+      this.userGuessTimeLeft = this.userGuessTimeLeft + event.userGuessTimeDiff;
+
+      console.log("User guess time left:", this.userGuessTimeLeft);
+    }
+    if (event.aiGuessTimeDiff !== undefined) {
+      this.aiGuessTimeLeft = this.aiGuessTimeLeft + event.aiGuessTimeDiff;
     }
   }
 }
