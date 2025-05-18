@@ -5,6 +5,7 @@ import { Router } from "@angular/router";
 import { GameService } from "../../services/game.service";
 import { GameHeaderComponent } from "../shared/game-header/game-header.component";
 import { CategoryComponent } from "../category/category.component";
+import { LoggingService } from "../../services/logging.service";
 
 @Component({
   selector: "app-user-guesses",
@@ -29,6 +30,7 @@ export class UserGuessesComponent implements OnInit {
     Places: 0,
   };
   isLoading = false;
+  @Input() currentDifficulty = "";
   @Input() userGuessTimeLeft = 60;
   @Input() aiGuessTimeLeft = 60;
   @Output() timerChanged = new EventEmitter<{
@@ -44,9 +46,12 @@ export class UserGuessesComponent implements OnInit {
 
   @Input() roundNumber: number = 1;
   @Output() roundCompleted = new EventEmitter<void>();
-  currentDifficulty = "easy";
 
-  constructor(private gameService: GameService, private router: Router) {}
+  constructor(
+    private gameService: GameService,
+    private router: Router,
+    private loggingService: LoggingService
+  ) {}
 
   ngOnInit() {}
 
@@ -58,16 +63,18 @@ export class UserGuessesComponent implements OnInit {
 
   startTimer() {
     if (this.timer) clearInterval(this.timer);
-    console.log("Time left:", this.userGuessTimeLeft);
 
     this.timer = setInterval(() => {
       if (this.userGuessTimeLeft > 0) {
-        console.log("Time left:", this.userGuessTimeLeft);
         this.timerChanged.emit({ userGuessTimeDiff: -1 });
       } else {
         clearInterval(this.timer);
         this.gameOver = true;
         this.feedback = "⏰ Time is up!";
+        this.loggingService.logEvent("timeout", {
+          roundNumber: this.roundNumber,
+          category: this.currentCategory,
+        });
       }
     }, 1000);
   }
@@ -102,6 +109,12 @@ export class UserGuessesComponent implements OnInit {
         this.isCorrect = false;
         this.isLoading = false;
         this.startTimer();
+        this.loggingService.logEvent("newRoundStarted", {
+          roundNumber: this.roundNumber,
+          category: this.currentCategory,
+          difficulty: currentDifficulty,
+          description: this.description,
+        });
       });
   }
 
@@ -111,6 +124,16 @@ export class UserGuessesComponent implements OnInit {
     const answer = this.correctWord.trim().toLowerCase();
 
     if (guess === answer) {
+      this.loggingService.logEvent("userGuessSubmitted", {
+        guess: guess,
+        isCorrect: true,
+        timeTaken: 60 - this.userGuessTimeLeft, //TODO: calculate time taken
+        roundNumber: this.roundNumber,
+        phase: "user-guess",
+        category: this.currentCategory,
+        difficulty: this.currentDifficulty,
+      });
+
       this.correctAnswers++;
       this.playCorrectSound();
       this.timerChanged.emit({ userGuessTimeDiff: 10 });
@@ -122,6 +145,15 @@ export class UserGuessesComponent implements OnInit {
         this.roundCompleted.emit();
       }, 1500);
     } else {
+      this.loggingService.logEvent("userGuessSubmitted", {
+        guess: guess,
+        isCorrect: false,
+        timeTaken: 60 - this.userGuessTimeLeft, //TODO: calculate time taken
+        roundNumber: this.roundNumber,
+        phase: "user-guess",
+        category: this.currentCategory,
+        difficulty: this.currentDifficulty,
+      });
       this.wrongAnswers++;
       this.playWrongSound();
       this.timerChanged.emit({ userGuessTimeDiff: -10 });
@@ -137,36 +169,36 @@ export class UserGuessesComponent implements OnInit {
   getHint() {
     if (this.hintUsed < 3) {
       this.hintUsed++;
-      // Logic for showing hint
+      this.loggingService.logEvent("hintUsed", {
+        hintNumber: this.hintUsed,
+        roundNumber: this.roundNumber,
+        category: this.currentCategory,
+        difficulty: this.currentDifficulty,
+        phase: "user-guess",
+      });
+      // TODO: Implement logic for showing the actual hint here
     } else {
       this.revealAnswer();
     }
   }
 
   revealAnswer() {
-    if (this.hintUsed >= 3) {
-      this.feedback = `The correct word was: ${this.correctWord}`;
-    } else {
-      this.feedback = "Incorrect! Try again or get a hint.";
-    }
-
-    this.roundCompleted.emit();
+    this.loggingService.logEvent("revealAnswer", {
+      correctAnswer: this.correctWord,
+      roundNumber: this.roundNumber,
+      category: this.currentCategory,
+      phase: "user-guess",
+    });
+    this.feedback = `The correct word was: ${this.correctWord}`;
     this.currentCategory = "";
-  }
-
-  checkIfGameWon() {
-    if (this.roundNumber > 18) {
-      this.playApplauseSound();
-      this.playWinSound();
-      this.router.navigate(["/winner"]);
-    }
+    this.roundCompleted.emit();
   }
 
   playCorrectSound() {
     this.playAudio("correct-sound");
   }
   playWrongSound() {
-    this.playAudio("wrong-sound");
+    this.playAudio("wrong");
   }
   playApplauseSound() {
     this.playAudio("applause-sound");
@@ -175,14 +207,16 @@ export class UserGuessesComponent implements OnInit {
     this.playAudio("win-sound");
   }
   playGameOverSound() {
-    this.playAudio("game-over-sound");
+    this.playAudio("game-over");
   }
 
-  private playAudio(id: string) {
-    const sound = document.getElementById(id) as HTMLAudioElement;
-    if (sound) {
-      sound.play();
-    }
+  private playAudio(name: string) {
+    const audio = new Audio();
+    audio.src = `assets/sounds/${name}.wav`;
+    audio.load();
+    audio.play().catch((error) => {
+      console.error("Error playing sound:", error);
+    });
   }
 
   goBack() {

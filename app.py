@@ -1,5 +1,7 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from pymongo import MongoClient
 import requests
 import json
 
@@ -110,6 +112,21 @@ The hint should be slightly cryptic but still understandable. Maximum one short 
     hint = response.json().get("response", "").strip()
 
     return jsonify({"hint": hint})
+
+db_password = os.getenv("DB_PASSWORD")
+base_uri = "mongodb+srv://llm-game-db-user:{}@cluster0.mvqxy54.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+full_uri = base_uri.format(db_password)
+
+client = MongoClient(full_uri, tlsAllowInvalidCertificates=True)
+db = client["word_game"]
+logs_collection = db["logs"]
+
+@app.route("/api/log", methods=["POST"])
+def log_event():
+    log_entry = request.get_json()
+    logs_collection.insert_one(log_entry)
+    return {"status": "success"}, 201
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

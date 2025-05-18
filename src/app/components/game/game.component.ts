@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { UserGuessesComponent } from "../user-guesses/user-guesses.component";
 import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add this import
@@ -11,6 +12,7 @@ import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add 
   styleUrls: ["./game.component.css"],
 })
 export class GameComponent {
+  constructor(private loggingService: any, private router: Router) {}
   userGuessTimeLeft = 60;
   aiGuessTimeLeft = 60;
   categories: string[] = ["Animals", "Food", "Places"];
@@ -45,7 +47,14 @@ export class GameComponent {
     if (this.roundNumber < 18) {
       this.roundNumber++;
     } else {
-      // route to winner or summary screen
+      this.loggingService.logEvent("gameFinished", {
+        totalRounds: this.roundNumber,
+        timestamp: new Date().toISOString(),
+      });
+      this.playWinSound();
+      this.playApplauseSound();
+      // You might want to route here if using Angular Router, for example:
+      // this.router.navigate(["/winner"]);
     }
   }
 
@@ -53,15 +62,33 @@ export class GameComponent {
     userGuessTimeDiff?: number;
     aiGuessTimeDiff?: number;
   }): void {
-    console.log("Timer changed event:", event);
     if (event.userGuessTimeDiff !== undefined) {
-      //TODO: Check time not negative
       this.userGuessTimeLeft = this.userGuessTimeLeft + event.userGuessTimeDiff;
-
       console.log("User guess time left:", this.userGuessTimeLeft);
+      if (this.userGuessTimeLeft <= 0 && this.isUserTurn) {
+        this.router.navigate(["/game-over"], {
+          queryParams: { reason: "user-timeout" },
+        });
+        return;
+      }
     }
     if (event.aiGuessTimeDiff !== undefined) {
       this.aiGuessTimeLeft = this.aiGuessTimeLeft + event.aiGuessTimeDiff;
+      if (this.aiGuessTimeLeft <= 0 && !this.isUserTurn) {
+        this.router.navigate(["/game-over"], {
+          queryParams: { reason: "ai-timeout" },
+        });
+        return;
+      }
     }
+  }
+  playWinSound() {
+    const audio = new Audio("assets/sounds/win.wav");
+    audio.play();
+  }
+
+  playApplauseSound() {
+    const audio = new Audio("assets/sounds/applause.wav");
+    audio.play();
   }
 }

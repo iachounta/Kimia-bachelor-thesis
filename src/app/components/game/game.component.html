@@ -5,6 +5,10 @@
     <app-ai-guesses
       [roundNumber]="roundNumber"
       (roundCompleted)="nextRound()"
+      [userGuessTimeLeft]="userGuessTimeLeft"
+      [aiGuessTimeLeft]="aiGuessTimeLeft"
+      (timerChanged)="onTimerChanged($event)"
+      [currentDifficulty]="currentDifficulty"
     ></app-ai-guesses>
   </ng-container>
 
@@ -13,8 +17,10 @@
       [roundNumber]="roundNumber"
       [categoryUsage]="userGuessCategoryUsage"
       [userGuessTimeLeft]="userGuessTimeLeft"
+      [aiGuessTimeLeft]="aiGuessTimeLeft"
       (roundCompleted)="nextRound()"
       (timerChanged)="onTimerChanged($event)"
+      [currentDifficulty]="currentDifficulty"
     ></app-user-guesses>
   </ng-template>
 </div>

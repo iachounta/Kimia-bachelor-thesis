@@ -49,11 +49,9 @@
       </button>
     </div>
 
-    <!-- Reveal button -->
-    <div *ngIf="hints.length >= 3 && !gameOver" class="reveal-container">
-      <button class="reveal-button" (click)="revealAnswer()">
-        Reveal Word & Skip
-      </button>
+    <!-- TODO: Skip button -->
+    <div *ngIf="!gameOver" class="skip-container">
+      <button class="skip-button" (click)="">Skip</button>
     </div>
 
     <!-- Hints (alternate) -->
