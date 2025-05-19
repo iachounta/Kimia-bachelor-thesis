@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { GameService } from "../../services/game.service";
 import { GameHeaderComponent } from "../shared/game-header/game-header.component";
+import { LoggingService } from "../../services/logging.service";
 
 @Component({
   selector: "app-ai-guesses",
@@ -12,6 +13,17 @@ import { GameHeaderComponent } from "../shared/game-header/game-header.component
   styleUrls: ["./ai-guesses.component.css"],
 })
 export class AiGuessesComponent {
+  selectedCategory: string = "Animal"; // Placeholder, can be dynamically set
+  fetchWordForUserToDescribe(): void {
+    this.gameService
+      .fetchWord({
+        category: this.selectedCategory,
+        difficulty: this.currentDifficulty,
+      })
+      .subscribe((response) => {
+        this.correctWord = response.word;
+      });
+  }
   userDescription = "";
   userHint = "";
   aiGuess = "";
@@ -33,7 +45,14 @@ export class AiGuessesComponent {
     aiGuessTimeDiff?: number;
   }>();
   gameOver = false;
-  constructor(private gameService: GameService, private loggingService: any) {}
+  constructor(
+    private gameService: GameService,
+    private loggingService: LoggingService
+  ) {}
+
+  ngOnInit() {
+    this.fetchWordForUserToDescribe();
+  }
 
   submitDescription() {
     this.startTimer();

@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { UserGuessesComponent } from "../user-guesses/user-guesses.component";
 import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add this import
+import { LoggingService } from "../../services/logging.service";
 
 @Component({
   selector: "app-game",
@@ -12,7 +13,7 @@ import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add 
   styleUrls: ["./game.component.css"],
 })
 export class GameComponent {
-  constructor(private loggingService: any, private router: Router) {}
+  constructor(private loggingService: LoggingService, private router: Router) {}
   userGuessTimeLeft = 60;
   aiGuessTimeLeft = 60;
   categories: string[] = ["Animals", "Food", "Places"];
@@ -31,7 +32,7 @@ export class GameComponent {
 
   CATEGORY_LIMIT = 3;
 
-  roundNumber = 4;
+  roundNumber = 1;
 
   get currentDifficulty(): string {
     if (this.roundNumber <= 6) return "easy";

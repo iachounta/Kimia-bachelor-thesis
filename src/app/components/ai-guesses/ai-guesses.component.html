@@ -10,6 +10,10 @@
     [aiTimeLeft]="aiGuessTimeLeft"
   ></app-game-header>
 
+  <div class="selected-word" *ngIf="correctWord">
+    <strong>Your word:</strong> {{ correctWord }}
+  </div>
+
   <div class="description-input">
     <textarea
       [(ngModel)]="userDescription"

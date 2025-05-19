@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-game-over",
@@ -9,7 +9,7 @@ import { ActivatedRoute } from "@angular/router";
 export class GameOverComponent implements OnInit {
   reason: string | null = null;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit(): void {
     this.reason = this.route.snapshot.queryParamMap.get("reason");
@@ -24,5 +24,9 @@ export class GameOverComponent implements OnInit {
       default:
         return "Game over.";
     }
+  }
+
+  startGame() {
+    this.router.navigate(["/game"]);
   }
 }
