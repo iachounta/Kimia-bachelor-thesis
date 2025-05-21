@@ -9,11 +9,13 @@
       [username]="username"
       [round]="roundNumber"
       [difficulty]="currentDifficulty"
-      [correctAnswers]="correctAnswers"
-      [wrongAnswers]="wrongAnswers"
+      [correctAnswers]="gameService.userStats.correct"
+      [wrongAnswers]="gameService.userStats.wrong"
       [userTimeLeft]="userGuessTimeLeft"
       [aiTimeLeft]="aiGuessTimeLeft"
       [currentCategory]="currentCategory"
+      [aiStats]="gameService.aiStats"
+      [userStats]="gameService.userStats"
     ></app-game-header>
 
     <div *ngIf="isLoading" class="ai-loading">
@@ -56,7 +58,7 @@
 
     <!-- Hints (alternate) -->
     <button
-      *ngIf="wrongAnswers >= 2 && hintUsed < 3"
+      *ngIf="gameService.userStats.wrong >= 2 && hintUsed < 3"
       (click)="getHint()"
       [disabled]="hintUsed >= 3"
       title="Up to 3 hints. Each costs 5 seconds"

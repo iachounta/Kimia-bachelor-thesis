@@ -1,18 +1,49 @@
-<div class="game-header">
-  <p class="username">
-    👋 Hi <strong>{{ username }}</strong
-    >!
-  </p>
-  <h2>🎯 Guess the Word!</h2>
+<div
+  class="game-header"
+  style="
+    font-family: 'Roboto Mono', monospace;
+    font-size: 1.05rem;
+    font-weight: 600;
+  "
+>
+  <h2 style="text-align: center">🎯 Word Battle</h2>
 
-  <p><strong>Difficulty:</strong> {{ difficulty }}</p>
-  <p>
-    <strong>Category:</strong>
+  <p style="text-align: center">
+    <strong>Difficulty:</strong> {{ difficulty }} | <strong>Category:</strong>
     {{ currentCategory }}
   </p>
 
-  <p>✅ Correct: {{ correctAnswers }} | ❌ Wrong: {{ wrongAnswers }}</p>
-  <p>🔄 Round: {{ round }} / 18</p>
-  <p>⏳ User Time: {{ userTimeLeft }}s</p>
-  <p>🤖 AI Time: {{ aiTimeLeft }}s</p>
+  <div
+    style="
+      display: flex;
+      justify-content: space-between;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+    "
+  >
+    <div
+      style="
+        flex: 1;
+        text-align: left;
+        padding-right: 1rem;
+        border-right: 1px solid #ddd;
+      "
+    >
+      <strong>🧍 {{ username }}</strong
+      ><br />
+      ✅ Correct: {{ userStats?.correct }}<br />
+      ❌ Wrong: {{ userStats?.wrong }}<br />
+      ⏳ Time Left: {{ userTimeLeft }}s
+    </div>
+    <div style="flex: 1; text-align: right; padding-left: 1rem">
+      <strong>🤖 AI</strong><br />
+      ✅ Correct: {{ aiStats?.correct }}<br />
+      ❌ Wrong: {{ aiStats?.wrong }}<br />
+      ⏳ Time Left: {{ aiTimeLeft }}s
+    </div>
+  </div>
+
+  <p style="text-align: center">🔄 Round: {{ round }} / 18</p>
 </div>

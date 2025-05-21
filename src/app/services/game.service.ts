@@ -29,7 +29,13 @@ export class GameService {
       category,
     });
   }
+  userStats = { correct: 0, wrong: 0, skipped: 0 };
+  aiStats = { correct: 0, wrong: 0, skipped: 0 };
 
+  resetStats() {
+    this.userStats = { correct: 0, wrong: 0, skipped: 0 };
+    this.aiStats = { correct: 0, wrong: 0, skipped: 0 };
+  }
   makeGuess(description: string): Observable<GuessResponse> {
     return this.http.post<GuessResponse>(`${this.apiUrl}/guess`, {
       description,

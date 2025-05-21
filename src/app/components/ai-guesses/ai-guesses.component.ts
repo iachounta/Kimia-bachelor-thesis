@@ -14,6 +14,7 @@ import { LoggingService } from "../../services/logging.service";
 })
 export class AiGuessesComponent {
   selectedCategory: string = "Animal"; // Placeholder, can be dynamically set
+  isAiGuessCorrect = false;
   fetchWordForUserToDescribe(): void {
     this.gameService
       .fetchWord({
@@ -34,8 +35,6 @@ export class AiGuessesComponent {
   username = localStorage.getItem("username") || "Guest";
   @Input() roundNumber: number = 1;
   @Input() currentDifficulty = "";
-  correctAnswers = 0;
-  wrongGuesses = 0;
   hintUsed = 0;
   @Input() userGuessTimeLeft = 60;
   @Input() aiGuessTimeLeft = 60;
@@ -44,9 +43,11 @@ export class AiGuessesComponent {
     userGuessTimeDiff?: number;
     aiGuessTimeDiff?: number;
   }>();
+  @Output() gameOverEvent = new EventEmitter<void>();
   gameOver = false;
+  localWrongGuesses = 0;
   constructor(
-    private gameService: GameService,
+    public gameService: GameService,
     private loggingService: LoggingService
   ) {}
 
@@ -55,10 +56,12 @@ export class AiGuessesComponent {
   }
 
   submitDescription() {
-    this.startTimer();
-    if (!this.userDescription.trim()) {
+    const wordCount = this.userDescription.trim().split(/\s+/).length;
+    if (wordCount < 3) {
+      this.feedback = "Please write at least 3 words in your description.";
       return;
     }
+    this.startTimer();
     this.loggingService.logEvent("aiGuessRoundStarted", {
       roundNumber: this.roundNumber,
       difficulty: this.currentDifficulty,
@@ -77,41 +80,38 @@ export class AiGuessesComponent {
         phase: "ai-guess",
       });
       this.pauseTimer();
+      // Automatic correctness checking
+      this.isAiGuessCorrect =
+        this.aiGuess.toLowerCase().trim() ===
+        this.correctWord.toLowerCase().trim();
+
+      if (this.isAiGuessCorrect) {
+        this.feedback = "✅ Correct!";
+        this.gameService.aiStats.correct++;
+        this.score += 2;
+        setTimeout(() => {
+          this.userDescription = "";
+          this.aiGuess = "";
+          this.feedback = "";
+          this.isAiGuessCorrect = false;
+          this.fetchWordForUserToDescribe();
+        }, 3000);
+      } else {
+        this.feedback = "❌ Wrong. Try giving a hint!";
+        this.gameService.aiStats.wrong++;
+        this.localWrongGuesses++;
+        this.score = Math.max(0, this.score - 1);
+        if (this.localWrongGuesses >= 2 && this.hintUsed < 3) {
+          this.showHintInput = true;
+        }
+        if (this.hintUsed >= 3) {
+          this.feedback = `The correct word was: ${this.correctWord}`;
+        }
+      }
     });
   }
 
-  handleFeedback(isCorrect: boolean) {
-    if (isCorrect) {
-      this.loggingService.logEvent("aiGuessFeedback", {
-        isCorrect: true,
-        roundNumber: this.roundNumber,
-        difficulty: this.currentDifficulty,
-        phase: "ai-guess",
-      });
-      this.feedback = "Correct! The AI got it!";
-      this.score += 2;
-      this.aiGuess = "";
-      this.userDescription = "";
-      this.showHintInput = false;
-    } else {
-      this.loggingService.logEvent("aiGuessFeedback", {
-        isCorrect: false,
-        roundNumber: this.roundNumber,
-        difficulty: this.currentDifficulty,
-        wrongGuessCount: this.wrongGuesses,
-        phase: "ai-guess",
-      });
-      this.wrongGuesses++;
-      this.score = Math.max(0, this.score - 1);
-      if (this.wrongGuesses >= 2 && this.hintUsed < 3) {
-        this.feedback = "Wrong guess from the AI. Provide a hint.";
-        this.showHintInput = true;
-      }
-      if (this.hintUsed >= 3) {
-        this.feedback = `The correct word was: ${this.correctWord}`;
-      }
-    }
-  }
+  // handleFeedback removed: now handled automatically in submitDescription
 
   submitHint() {
     if (!this.userHint.trim()) {
@@ -142,7 +142,7 @@ export class AiGuessesComponent {
     this.timer = setInterval(() => {
       if (this.aiGuessTimeLeft > 0) {
         console.log("Time left:", this.aiGuessTimeLeft);
-        this.timerChanged.emit({ userGuessTimeDiff: -1 });
+        this.timerChanged.emit({ aiGuessTimeDiff: -1 });
       } else {
         clearInterval(this.timer);
         this.gameOver = true;
@@ -152,6 +152,7 @@ export class AiGuessesComponent {
           difficulty: this.currentDifficulty,
           phase: "ai-guess",
         });
+        this.gameOverEvent.emit();
       }
     }, 1000);
   }
@@ -161,5 +162,20 @@ export class AiGuessesComponent {
       clearInterval(this.timer);
       this.timer = null;
     }
+  }
+
+  handleSkip() {
+    this.userGuessTimeLeft = Math.max(0, this.userGuessTimeLeft - 5);
+    this.gameService.userStats.skipped++;
+    this.loggingService.logEvent("userSkippedWord", {
+      roundNumber: this.roundNumber,
+      difficulty: this.currentDifficulty,
+      phase: "ai-guess",
+      reason: "user_clicked_skip",
+    });
+    this.fetchWordForUserToDescribe();
+    this.userDescription = "";
+    this.aiGuess = "";
+    this.feedback = "";
   }
 }

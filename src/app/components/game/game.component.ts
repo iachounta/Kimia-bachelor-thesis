@@ -4,6 +4,7 @@ import { CommonModule } from "@angular/common";
 import { UserGuessesComponent } from "../user-guesses/user-guesses.component";
 import { AiGuessesComponent } from "../ai-guesses/ai-guesses.component"; // Add this import
 import { LoggingService } from "../../services/logging.service";
+import { GameService } from "../../services/game.service";
 
 @Component({
   selector: "app-game",
@@ -13,10 +14,15 @@ import { LoggingService } from "../../services/logging.service";
   styleUrls: ["./game.component.css"],
 })
 export class GameComponent {
-  constructor(private loggingService: LoggingService, private router: Router) {}
+  constructor(
+    private loggingService: LoggingService,
+    private router: Router,
+    public gameService: GameService
+  ) {}
   userGuessTimeLeft = 60;
   aiGuessTimeLeft = 60;
   categories: string[] = ["Animals", "Food", "Places"];
+  currentTurn: "user" | "ai" = "user";
 
   userGuessCategoryUsage: { [key: string]: number } = {
     Animals: 0,
@@ -91,5 +97,10 @@ export class GameComponent {
   playApplauseSound() {
     const audio = new Audio("assets/sounds/applause.wav");
     audio.play();
+  }
+  onGameOver(): void {
+    this.router.navigate(["/game-over"], {
+      queryParams: { reason: "timeout" },
+    });
   }
 }

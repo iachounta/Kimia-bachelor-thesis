@@ -1002,1846 +1002,762 @@
   {
     "word": "cow",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "whale",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "rabbit",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "dog",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "dolphin",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "donkey",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "elephant",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "bee",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "cat",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "fish",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "frog",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "giraffe",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "goat",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "hippo",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "horse",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "jellyfish",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "lion",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "monkey",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "mouse",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "panda",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "parrot",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "penguin",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "puppy",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "shark",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "snake",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "spider",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "tiger",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "zebra",
     "category": "Animal",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "apple",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "banana",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "bread",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "burger",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "cake",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "carrot",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "cheese",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "chicken",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "chips",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "chocolate",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "coffee",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "egg",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "fish",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "fruit",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "grape",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "honey",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "ice cream",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "jam",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "juice",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "lemon",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "lemonade",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "meat",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "milk",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "mushroom",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "noodles",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "onion",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "orange",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "pasta",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "pear",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "pepper",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "pizza",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "rice",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "salad",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "salt",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "sandwich",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "sausage",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "soup",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "strawberry",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "sugar",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "tea",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "tomato",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "vegetable",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "water",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "yoghurt",
     "category": "Food",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "apartment",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "bank",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "bookshop",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "building",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "cafe",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "castle",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "cinema",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "college",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "department store",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "factory",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "farm",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "forest",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "garage",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "hospital",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "hotel",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "house",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "island",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "lake",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "library",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "market",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "mountain",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "museum",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "office",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "park",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "pharmacy",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "playground",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "police station",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "post office",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "railway station",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "restaurant",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "school",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "sea",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "shop",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "sports centre",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "stadium",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "street",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "supermarket",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "swimming pool",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "theatre",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "town",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "university",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "village",
     "category": "Place",
-    "difficulty": "medium"
+    "difficulty": "easy"
   },
   {
     "word": "zoo",
     "category": "Place",
-    "difficulty": "medium"
-  },
-  {
-    "word": "ant",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bat",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bee",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bird",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bull",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "butterfly",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "camel",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cat",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cattle",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cheetah",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "chicken",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cow",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "crab",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "crocodile",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "deer",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "dinosaur",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "dog",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "dolphin",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "donkey",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "duck",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "eagle",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "elephant",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "fish",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "fox",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "frog",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "giraffe",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "goat",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "goldfish",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hamster",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hippo",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "horse",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "insect",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "jellyfish",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "kangaroo",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "kitten",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lion",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lizard",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lobster",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "monkey",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mosquito",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mouse",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "octopus",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "owl",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "ox",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "panda",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "parrot",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "peacock",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "penguin",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pig",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "puppy",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "rabbit",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "rat",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "reptile",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "rooster",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "scorpion",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "seal",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "shark",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sheep",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "snail",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "snake",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "spider",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "squid",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "swan",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "tiger",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "toad",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "tortoise",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "turkey",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "turtle",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "whale",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "wolf",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "zebra",
-    "category": "Animal",
-    "difficulty": "hard"
-  },
-  {
-    "word": "apple",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "apricot",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "avocado",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bacon",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "banana",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "barbecue",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bean",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "beef",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "beer",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "biscuit",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bread",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "broccoli",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "burger",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "butter",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cake",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "candy",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "carrot",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cauliflower",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cereal",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cheese",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cherry",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "chicken",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "chilli",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "chocolate",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "coconut",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "coffee",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cookie",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "corn",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cucumber",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "doughnut",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "egg",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "fig",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "fish",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "flour",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "garlic",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "grape",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "grapefruit",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hamburger",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "honey",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "ice cream",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "jam",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "juice",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "ketchup",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "kiwi",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "leek",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lemon",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lettuce",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lime",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lobster",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mango",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "meat",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "milk",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mushroom",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mustard",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "noodles",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "nut",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "oil",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "olive",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "onion",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "orange",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pancake",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "papaya",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pasta",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "peach",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pear",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "peas",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pepper",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pie",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pineapple",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pizza",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "plum",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pomegranate",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pork",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "potato",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pumpkin",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "raspberry",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "rice",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "salad",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "salmon",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "salt",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sandwich",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sausage",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "shrimp",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "soup",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "spinach",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "strawberry",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sugar",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sushi",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sweet",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "tea",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "tomato",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "tuna",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "vegetable",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "vinegar",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "water",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "watermelon",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "wine",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "yoghurt",
-    "category": "Food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "airport",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "amusement park",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "apartment",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "art gallery",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bakery",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bank",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bar",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "beach",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bookstore",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bridge",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "building",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bus station",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "bus stop",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cafe",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "campground",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "castle",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cathedral",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cemetery",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "church",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "cinema",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "city",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "classroom",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "clinic",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "club",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "college",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "concert hall",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "country",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "court",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "dentist",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "department store",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "desert",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "downtown",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "embassy",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "factory",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "farm",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "fire station",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "forest",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "garage",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "gas station",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "gym",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hairdresser",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "harbour",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hill",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hospital",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hotel",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "house",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "island",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "kitchen",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "lake",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "library",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "market",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "monument",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mosque",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "mountain",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "museum",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "office",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "palace",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "park",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "parking lot",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "pharmacy",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "playground",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "police station",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "post office",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "restaurant",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "river",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "road",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "school",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sea",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "shop",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "shopping centre",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "sports centre",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "square",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "stadium",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "station",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "store",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "street",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "supermarket",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "swimming pool",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "temple",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "theatre",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "town",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "university",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "valley",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "village",
-    "category": "Place",
-    "difficulty": "hard"
-  },
-  {
-    "word": "zoo",
-    "category": "Place",
-    "difficulty": "hard"
-  }
-]
+    "difficulty": "easy"
+  },
+
+    { "word": "asparagus", "category": "food", "difficulty": "medium" },
+    { "word": "avocado", "category": "food", "difficulty": "medium" },
+    { "word": "blueberry", "category": "food", "difficulty": "medium" },
+    { "word": "broccoli", "category": "food", "difficulty": "medium" },
+    { "word": "cabbage", "category": "food", "difficulty": "medium" },
+    { "word": "cucumber", "category": "food", "difficulty": "medium" },
+    { "word": "eggplant", "category": "food", "difficulty": "medium" },
+    { "word": "garlic", "category": "food", "difficulty": "medium" },
+    { "word": "ginger", "category": "food", "difficulty": "medium" },
+    { "word": "grapefruit", "category": "food", "difficulty": "medium" },
+    { "word": "hazelnut", "category": "food", "difficulty": "medium" },
+    { "word": "herbs", "category": "food", "difficulty": "medium" },
+    { "word": "lasagna", "category": "food", "difficulty": "medium" },
+    { "word": "lettuce", "category": "food", "difficulty": "medium" },
+    { "word": "muffin", "category": "food", "difficulty": "medium" },
+    { "word": "mushroom", "category": "food", "difficulty": "medium" },
+    { "word": "nectarine", "category": "food", "difficulty": "medium" },
+    { "word": "oatmeal", "category": "food", "difficulty": "medium" },
+    { "word": "papaya", "category": "food", "difficulty": "medium" },
+    { "word": "pastry", "category": "food", "difficulty": "medium" },
+    { "word": "peach", "category": "food", "difficulty": "medium" },
+    { "word": "peanut", "category": "food", "difficulty": "medium" },
+    { "word": "pickle", "category": "food", "difficulty": "medium" },
+    { "word": "pomegranate", "category": "food", "difficulty": "medium" },
+    { "word": "radish", "category": "food", "difficulty": "medium" },
+    { "word": "raspberry", "category": "food", "difficulty": "medium" },
+    { "word": "salmon", "category": "food", "difficulty": "medium" },
+    { "word": "sardine", "category": "food", "difficulty": "medium" },
+    { "word": "spinach", "category": "food", "difficulty": "medium" },
+    { "word": "yolk", "category": "food", "difficulty": "medium" },
+  
+
+    { "word": "antelope", "category": "animal", "difficulty": "medium" },
+    { "word": "badger", "category": "animal", "difficulty": "medium" },
+    { "word": "bison", "category": "animal", "difficulty": "medium" },
+    { "word": "boar", "category": "animal", "difficulty": "medium" },
+    { "word": "buffalo", "category": "animal", "difficulty": "medium" },
+    { "word": "chameleon", "category": "animal", "difficulty": "medium" },
+    { "word": "cheetah", "category": "animal", "difficulty": "medium" },
+    { "word": "crab", "category": "animal", "difficulty": "medium" },
+    { "word": "crane", "category": "animal", "difficulty": "medium" },
+    { "word": "coyote", "category": "animal", "difficulty": "medium" },
+    { "word": "deer", "category": "animal", "difficulty": "medium" },
+    { "word": "falcon", "category": "animal", "difficulty": "medium" },
+    { "word": "flamingo", "category": "animal", "difficulty": "medium" },
+    { "word": "gazelle", "category": "animal", "difficulty": "medium" },
+    { "word": "hedgehog", "category": "animal", "difficulty": "medium" },
+    { "word": "iguana", "category": "animal", "difficulty": "medium" },
+    { "word": "koala", "category": "animal", "difficulty": "medium" },
+    { "word": "leopard", "category": "animal", "difficulty": "medium" },
+    { "word": "lynx", "category": "animal", "difficulty": "medium" },
+    { "word": "moose", "category": "animal", "difficulty": "medium" },
+    { "word": "narwhal", "category": "animal", "difficulty": "medium" },
+    { "word": "ostrich", "category": "animal", "difficulty": "medium" },
+    { "word": "panther", "category": "animal", "difficulty": "medium" },
+    { "word": "peacock", "category": "animal", "difficulty": "medium" },
+    { "word": "porcupine", "category": "animal", "difficulty": "medium" },
+    { "word": "raccoon", "category": "animal", "difficulty": "medium" },
+    { "word": "reindeer", "category": "animal", "difficulty": "medium" },
+    { "word": "seal", "category": "animal", "difficulty": "medium" },
+    { "word": "toucan", "category": "animal", "difficulty": "medium" },
+    { "word": "vulture", "category": "animal", "difficulty": "medium" },
+  
+    { "word": "amusement park", "category": "place", "difficulty": "medium" },
+    { "word": "aquarium", "category": "place", "difficulty": "medium" },
+    { "word": "bakery", "category": "place", "difficulty": "medium" },
+    { "word": "boarding school", "category": "place", "difficulty": "medium" },
+    { "word": "bookstore", "category": "place", "difficulty": "medium" },
+    { "word": "campsite", "category": "place", "difficulty": "medium" },
+    { "word": "cathedral", "category": "place", "difficulty": "medium" },
+    { "word": "cemetery", "category": "place", "difficulty": "medium" },
+    { "word": "community center", "category": "place", "difficulty": "medium" },
+    { "word": "courthouse", "category": "place", "difficulty": "medium" },
+    { "word": "dormitory", "category": "place", "difficulty": "medium" },
+    { "word": "embassy", "category": "place", "difficulty": "medium" },
+    { "word": "exhibition hall", "category": "place", "difficulty": "medium" },
+    { "word": "ferry terminal", "category": "place", "difficulty": "medium" },
+    { "word": "grocery store", "category": "place", "difficulty": "medium" },
+    { "word": "hostel", "category": "place", "difficulty": "medium" },
+    { "word": "laboratory", "category": "place", "difficulty": "medium" },
+    { "word": "lighthouse", "category": "place", "difficulty": "medium" },
+    { "word": "marketplace", "category": "place", "difficulty": "medium" },
+    { "word": "monastery", "category": "place", "difficulty": "medium" },
+    { "word": "observatory", "category": "place", "difficulty": "medium" },
+    { "word": "orphanage", "category": "place", "difficulty": "medium" },
+    { "word": "palace", "category": "place", "difficulty": "medium" },
+    { "word": "parliament", "category": "place", "difficulty": "medium" },
+    { "word": "plantation", "category": "place", "difficulty": "medium" },
+    { "word": "resort", "category": "place", "difficulty": "medium" },
+    { "word": "ruins", "category": "place", "difficulty": "medium" },
+    { "word": "suburb", "category": "place", "difficulty": "medium" },
+    { "word": "temple", "category": "place", "difficulty": "medium" },
+    { "word": "zoological park", "category": "place", "difficulty": "medium" },
+
+      { "word": "artichoke", "category": "food", "difficulty": "hard" },
+      { "word": "bouillabaisse", "category": "food", "difficulty": "hard" },
+      { "word": "bruschetta", "category": "food", "difficulty": "hard" },
+      { "word": "cappuccino", "category": "food", "difficulty": "hard" },
+      { "word": "carpaccio", "category": "food", "difficulty": "hard" },
+      { "word": "charcuterie", "category": "food", "difficulty": "hard" },
+      { "word": "chutney", "category": "food", "difficulty": "hard" },
+      { "word": "confectionery", "category": "food", "difficulty": "hard" },
+      { "word": "croissant", "category": "food", "difficulty": "hard" },
+      { "word": "crudités", "category": "food", "difficulty": "hard" },
+      { "word": "cuisine", "category": "food", "difficulty": "hard" },
+      { "word": "decaffeinated", "category": "food", "difficulty": "hard" },
+      { "word": "digestif", "category": "food", "difficulty": "hard" },
+      { "word": "escargot", "category": "food", "difficulty": "hard" },
+      { "word": "fermentation", "category": "food", "difficulty": "hard" },
+      { "word": "foie gras", "category": "food", "difficulty": "hard" },
+      { "word": "gastronomy", "category": "food", "difficulty": "hard" },
+      { "word": "hors d'oeuvre", "category": "food", "difficulty": "hard" },
+      { "word": "infusion", "category": "food", "difficulty": "hard" },
+      { "word": "kefir", "category": "food", "difficulty": "hard" },
+      { "word": "kimchi", "category": "food", "difficulty": "hard" },
+      { "word": "liqueur", "category": "food", "difficulty": "hard" },
+      { "word": "marination", "category": "food", "difficulty": "hard" },
+      { "word": "mirepoix", "category": "food", "difficulty": "hard" },
+      { "word": "moussaka", "category": "food", "difficulty": "hard" },
+      { "word": "prosciutto", "category": "food", "difficulty": "hard" },
+      { "word": "sashimi", "category": "food", "difficulty": "hard" },
+      { "word": "umami", "category": "food", "difficulty": "hard" },
+    
+
+      { "word": "axolotl", "category": "animal", "difficulty": "hard" },
+      { "word": "bandicoot", "category": "animal", "difficulty": "hard" },
+      { "word": "capybara", "category": "animal", "difficulty": "hard" },
+      { "word": "cassowary", "category": "animal", "difficulty": "hard" },
+      { "word": "coelacanth", "category": "animal", "difficulty": "hard" },
+      { "word": "echidna", "category": "animal", "difficulty": "hard" },
+      { "word": "elasmobranch", "category": "animal", "difficulty": "hard" },
+      { "word": "gibbon", "category": "animal", "difficulty": "hard" },
+      { "word": "guanaco", "category": "animal", "difficulty": "hard" },
+      { "word": "harpy eagle", "category": "animal", "difficulty": "hard" },
+      { "word": "ibex", "category": "animal", "difficulty": "hard" },
+      { "word": "jaguarundi", "category": "animal", "difficulty": "hard" },
+      { "word": "kinkajou", "category": "animal", "difficulty": "hard" },
+      { "word": "kiwi", "category": "animal", "difficulty": "hard" },
+      { "word": "lamprey", "category": "animal", "difficulty": "hard" },
+      { "word": "lemur", "category": "animal", "difficulty": "hard" },
+      { "word": "manatee", "category": "animal", "difficulty": "hard" },
+      { "word": "marmoset", "category": "animal", "difficulty": "hard" },
+      { "word": "numbat", "category": "animal", "difficulty": "hard" },
+      { "word": "okapi", "category": "animal", "difficulty": "hard" },
+      { "word": "pangolin", "category": "animal", "difficulty": "hard" },
+      { "word": "platypus", "category": "animal", "difficulty": "hard" },
+      { "word": "quokka", "category": "animal", "difficulty": "hard" },
+      { "word": "quoll", "category": "animal", "difficulty": "hard" },
+      { "word": "salamander", "category": "animal", "difficulty": "hard" },
+      { "word": "serval", "category": "animal", "difficulty": "hard" },
+      { "word": "sloth", "category": "animal", "difficulty": "hard" },
+      { "word": "tapir", "category": "animal", "difficulty": "hard" },
+      { "word": "tenrec", "category": "animal", "difficulty": "hard" },
+      { "word": "wolverine", "category": "animal", "difficulty": "hard" },
+    
+      { "word": "archipelago", "category": "place", "difficulty": "hard" },
+      { "word": "asylum", "category": "place", "difficulty": "hard" },
+      { "word": "bazaar", "category": "place", "difficulty": "hard" },
+      { "word": "boutique", "category": "place", "difficulty": "hard" },
+      { "word": "catacomb", "category": "place", "difficulty": "hard" },
+      { "word": "citadel", "category": "place", "difficulty": "hard" },
+      { "word": "cloister", "category": "place", "difficulty": "hard" },
+      { "word": "conservatory", "category": "place", "difficulty": "hard" },
+      { "word": "courtyard", "category": "place", "difficulty": "hard" },
+      { "word": "dormitory", "category": "place", "difficulty": "hard" },
+      { "word": "embassy", "category": "place", "difficulty": "hard" },
+      { "word": "esplanade", "category": "place", "difficulty": "hard" },
+      { "word": "greenhouse", "category": "place", "difficulty": "hard" },
+      { "word": "grotto", "category": "place", "difficulty": "hard" },
+      { "word": "habitat", "category": "place", "difficulty": "hard" },
+      { "word": "harbor", "category": "place", "difficulty": "hard" },
+      { "word": "hearth", "category": "place", "difficulty": "hard" },
+      { "word": "hermitage", "category": "place", "difficulty": "hard" },
+      { "word": "lair", "category": "place", "difficulty": "hard" },
+      { "word": "monastery", "category": "place", "difficulty": "hard" },
+      { "word": "necropolis", "category": "place", "difficulty": "hard" },
+      { "word": "observatory", "category": "place", "difficulty": "hard" },
+      { "word": "piazza", "category": "place", "difficulty": "hard" },
+      { "word": "precinct", "category": "place", "difficulty": "hard" },
+      { "word": "promenade", "category": "place", "difficulty": "hard" },
+      { "word": "refectory", "category": "place", "difficulty": "hard" },
+      { "word": "reservoir", "category": "place", "difficulty": "hard" },
+      { "word": "sanctuary", "category": "place", "difficulty": "hard" },
+      { "word": "stronghold", "category": "place", "difficulty": "hard" },
+      { "word": "turret", "category": "place", "difficulty": "hard" }
+    ]

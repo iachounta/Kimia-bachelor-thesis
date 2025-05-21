@@ -40,15 +40,13 @@ export class UserGuessesComponent implements OnInit {
   timer: any;
   gameOver = false;
   username = localStorage.getItem("username") || "Guest";
-  correctAnswers = 0;
-  wrongAnswers = 0;
   hintUsed = 0;
 
   @Input() roundNumber: number = 1;
   @Output() roundCompleted = new EventEmitter<void>();
 
   constructor(
-    private gameService: GameService,
+    public gameService: GameService,
     private router: Router,
     private loggingService: LoggingService
   ) {}
@@ -134,7 +132,7 @@ export class UserGuessesComponent implements OnInit {
         difficulty: this.currentDifficulty,
       });
 
-      this.correctAnswers++;
+      this.gameService.userStats.correct++;
       this.playCorrectSound();
       this.timerChanged.emit({ userGuessTimeDiff: 10 });
       this.feedback = "Correct! +10 seconds ⏱️";
@@ -154,7 +152,7 @@ export class UserGuessesComponent implements OnInit {
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
       });
-      this.wrongAnswers++;
+      this.gameService.userStats.wrong++;
       this.playWrongSound();
       this.timerChanged.emit({ userGuessTimeDiff: -10 });
       this.feedback =
@@ -221,5 +219,21 @@ export class UserGuessesComponent implements OnInit {
 
   goBack() {
     window.location.href = "/";
+  }
+
+  handleSkip() {
+    this.userGuessTimeLeft = Math.max(0, this.userGuessTimeLeft - 5);
+    this.gameService.userStats.skipped++;
+    this.loggingService.logEvent("userSkippedWord", {
+      roundNumber: this.roundNumber,
+      difficulty: this.currentDifficulty,
+      category: this.currentCategory,
+      reason: "user_clicked_skip",
+    });
+    this.startNewGame();
+    this.userGuess = "";
+    this.feedback = "";
+    this.hints = [];
+    this.isCorrect = false;
   }
 }

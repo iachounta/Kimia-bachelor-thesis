@@ -17,4 +17,6 @@ export class GameHeaderComponent {
   @Input() userTimeLeft: number = 0;
   @Input() aiTimeLeft: number = 0;
   @Input() currentCategory: string = "";
+  @Input() userStats!: { correct: number; wrong: number; skipped: number };
+  @Input() aiStats!: { correct: number; wrong: number; skipped: number };
 }
