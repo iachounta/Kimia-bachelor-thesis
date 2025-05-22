@@ -10,14 +10,14 @@ import { Component, Input, Output, EventEmitter } from "@angular/core";
 })
 export class CategoryComponent {
   @Input() categoryUsage: { [key: string]: number } = {
-    Animals: 0,
-    Food: 0,
-    Places: 0,
+    animal: 0,
+    food: 0,
+    place: 0,
   };
   @Input() CATEGORY_LIMIT: number = 3;
 
   @Output() categorySelected = new EventEmitter<string>();
-  categories = ["Animals", "Food", "Places"];
+  categories = ["animal", "food", "place"];
 
   selectCategory(category: string): void {
     if (this.categoryUsage[category] >= this.CATEGORY_LIMIT) {

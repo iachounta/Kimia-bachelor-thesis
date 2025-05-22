@@ -41,6 +41,7 @@ export class UserGuessesComponent implements OnInit {
   gameOver = false;
   username = localStorage.getItem("username") || "Guest";
   hintUsed = 0;
+  localWrongGuesses = 0;
 
   @Input() roundNumber: number = 1;
   @Output() roundCompleted = new EventEmitter<void>();
@@ -68,7 +69,6 @@ export class UserGuessesComponent implements OnInit {
       } else {
         clearInterval(this.timer);
         this.gameOver = true;
-        this.feedback = "⏰ Time is up!";
         this.loggingService.logEvent("timeout", {
           roundNumber: this.roundNumber,
           category: this.currentCategory,
@@ -152,13 +152,11 @@ export class UserGuessesComponent implements OnInit {
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
       });
+      this.localWrongGuesses++;
       this.gameService.userStats.wrong++;
       this.playWrongSound();
       this.timerChanged.emit({ userGuessTimeDiff: -10 });
-      this.feedback =
-        this.userGuessTimeLeft === 0
-          ? "Game Over. ⏱️ -10 seconds!"
-          : "Wrong! Try again ⏱️ -10 seconds!";
+      this.feedback = "Wrong! Try again ⏱️ -10 seconds!";
     }
 
     this.userGuess = "";
@@ -173,6 +171,10 @@ export class UserGuessesComponent implements OnInit {
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
         phase: "user-guess",
+      });
+      this.gameService.getHint(this.correctWord).subscribe((response) => {
+        this.hints.push(response.hint);
+        this.feedback = `Hint: ${response.hint}`;
       });
       // TODO: Implement logic for showing the actual hint here
     } else {

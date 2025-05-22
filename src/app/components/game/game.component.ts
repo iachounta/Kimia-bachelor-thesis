@@ -18,23 +18,25 @@ export class GameComponent {
     private loggingService: LoggingService,
     private router: Router,
     public gameService: GameService
-  ) {}
+  ) {
+    this.currentAICategory = this.getRandomCategory();
+  }
   userGuessTimeLeft = 60;
   aiGuessTimeLeft = 60;
-  categories: string[] = ["Animals", "Food", "Places"];
-  currentTurn: "user" | "ai" = "user";
 
   userGuessCategoryUsage: { [key: string]: number } = {
-    Animals: 0,
-    Food: 0,
-    Places: 0,
+    animal: 0,
+    food: 0,
+    place: 0,
   };
 
   aiGuessCategoryUsage: { [key: string]: number } = {
-    Animals: 0,
-    Food: 0,
-    Places: 0,
+    animal: 0,
+    food: 0,
+    place: 0,
   };
+
+  currentAICategory: string;
 
   CATEGORY_LIMIT = 3;
 
@@ -46,13 +48,14 @@ export class GameComponent {
     return "hard";
   }
 
-  get isUserTurn(): boolean {
+  get isUserGuess(): boolean {
     return (this.roundNumber - 1) % 6 < 3; // First 3 rounds of each block = user describes
   }
 
   nextRound() {
     if (this.roundNumber < 18) {
       this.roundNumber++;
+      if (!this.isUserGuess) this.currentAICategory = this.getRandomCategory();
     } else {
       this.loggingService.logEvent("gameFinished", {
         totalRounds: this.roundNumber,
@@ -64,6 +67,20 @@ export class GameComponent {
       // this.router.navigate(["/winner"]);
     }
   }
+  getRandomCategory(): string {
+    const categories = Object.keys(this.aiGuessCategoryUsage);
+    const availableCategories = categories.filter(
+      (category) => this.aiGuessCategoryUsage[category] < this.CATEGORY_LIMIT
+    );
+    if (availableCategories.length === 0) {
+      throw new Error("No available categories left for AI to guess.");
+      return "";
+    }
+    const randomIndex = Math.floor(Math.random() * availableCategories.length);
+    const selectedCategory = availableCategories[randomIndex];
+    this.aiGuessCategoryUsage[selectedCategory]++; // Increment user guess usage
+    return selectedCategory;
+  }
 
   onTimerChanged(event: {
     userGuessTimeDiff?: number;
@@ -72,7 +89,7 @@ export class GameComponent {
     if (event.userGuessTimeDiff !== undefined) {
       this.userGuessTimeLeft = this.userGuessTimeLeft + event.userGuessTimeDiff;
       console.log("User guess time left:", this.userGuessTimeLeft);
-      if (this.userGuessTimeLeft <= 0 && this.isUserTurn) {
+      if (this.userGuessTimeLeft <= 0 && this.isUserGuess) {
         this.router.navigate(["/game-over"], {
           queryParams: { reason: "user-timeout" },
         });
@@ -81,7 +98,8 @@ export class GameComponent {
     }
     if (event.aiGuessTimeDiff !== undefined) {
       this.aiGuessTimeLeft = this.aiGuessTimeLeft + event.aiGuessTimeDiff;
-      if (this.aiGuessTimeLeft <= 0 && !this.isUserTurn) {
+      console.log("User guess time left:", this.userGuessTimeLeft);
+      if (this.aiGuessTimeLeft <= 0 && !this.isUserGuess) {
         this.router.navigate(["/game-over"], {
           queryParams: { reason: "ai-timeout" },
         });

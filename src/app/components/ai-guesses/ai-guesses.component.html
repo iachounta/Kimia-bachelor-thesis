@@ -10,6 +10,7 @@
     [aiTimeLeft]="aiGuessTimeLeft"
     [aiStats]="gameService.aiStats"
     [userStats]="gameService.userStats"
+    [currentCategory]="currentCategory"
   ></app-game-header>
 
   <div class="selected-word" *ngIf="correctWord">
@@ -19,12 +20,36 @@
   <div class="description-input">
     <textarea
       [(ngModel)]="userDescription"
+      [disabled]="isThinking || localWrongGuesses > 0"
       placeholder="Describe your word for the AI to guess..."
       rows="4"
     ></textarea>
     <div style="display: flex; gap: 1rem; margin-top: 0.5rem">
-      <button (click)="submitDescription()">Let AI Guess</button>
-      <button (click)="handleSkip()">Skip (-5s)</button>
+      <button
+        class="guess-button"
+        [hidden]="localWrongGuesses >= 2"
+        [disabled]="isThinking"
+        (click)="submitDescription()"
+      >
+        {{ localWrongGuesses === 0 ? "Let AI Guess" : "Guess Again" }}
+      </button>
+      <button
+        (click)="handleSkip()"
+        [hidden]="localWrongGuesses !== 0 || isThinking"
+      >
+        Skip (-2s)
+      </button>
+    </div>
+    <div *ngIf="isThinking" style="margin-top: 0.5rem">
+      <em>Hmm.. I'm thinking...</em>
+    </div>
+    <div *ngIf="isHintPhase" class="hint-input">
+      <textarea
+        [(ngModel)]="userHint"
+        placeholder="Write a hint for the AI..."
+        rows="3"
+      ></textarea>
+      <button (click)="submitHint()">Submit Hint</button>
     </div>
   </div>
 
@@ -32,8 +57,14 @@
     *ngIf="aiGuess"
     class="ai-guess"
     [ngStyle]="{
-      backgroundColor: isAiGuessCorrect ? '#d4edda' : '#f8d7da',
-      color: isAiGuessCorrect ? '#155724' : '#721c24',
+      backgroundColor:
+        aiGuess.toLowerCase().trim() === correctWord.toLowerCase().trim()
+          ? '#d4edda'
+          : '#f8d7da',
+      color:
+        aiGuess.toLowerCase().trim() === correctWord.toLowerCase().trim()
+          ? '#155724'
+          : '#721c24',
       padding: '0.5rem 1rem',
       borderRadius: '6px',
       marginTop: '1rem',
@@ -43,28 +74,14 @@
     AI's guess: {{ aiGuess }}
   </div>
 
-  <div *ngIf="showHintInput" class="hint-input">
-    <textarea
-      [(ngModel)]="userHint"
-      placeholder="Provide a hint for the AI..."
-      rows="2"
-    ></textarea>
-    <button (click)="submitHint()">Submit Hint</button>
-  </div>
-
   <div *ngIf="feedback" class="feedback">
     {{ feedback }}
   </div>
 
-  <div *ngIf="gameService.aiStats.wrong >= 2 && hintUsed < 3">
-    <textarea
-      [(ngModel)]="userHint"
-      placeholder="Provide a hint for the AI..."
-    ></textarea>
-    <button (click)="submitHint()">Submit Hint</button>
-  </div>
-
   <div class="back-button">
     <button (click)="goBack()">Back to Start</button>
+  </div>
+  <div class="back-button">
+    <button (click)="goBack()">Next</button>
   </div>
 </div>

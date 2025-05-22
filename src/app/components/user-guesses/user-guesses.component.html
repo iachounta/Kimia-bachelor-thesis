@@ -38,13 +38,17 @@
 
     <!-- Buttons -->
     <div *ngIf="!gameOver" class="button-row">
-      <button class="submit-button" (click)="submitGuess()">
+      <button
+        class="submit-button"
+        [disabled]="isLoading || localWrongGuesses >= 3"
+        (click)="submitGuess()"
+      >
         Submit Guess
       </button>
       <button
         class="hint-button"
         (click)="getHint()"
-        [disabled]="hints.length >= 3"
+        [disabled]="hints.length >= 1 || localWrongGuesses !== 2"
         title="Up to 3 hints. Each costs 5 seconds."
       >
         Get Hint (-5 seconds)
@@ -57,14 +61,6 @@
     </div>
 
     <!-- Hints (alternate) -->
-    <button
-      *ngIf="gameService.userStats.wrong >= 2 && hintUsed < 3"
-      (click)="getHint()"
-      [disabled]="hintUsed >= 3"
-      title="Up to 3 hints. Each costs 5 seconds"
-    >
-      Get Hint (-5 seconds)
-    </button>
 
     <!-- Feedback -->
     <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">

@@ -2,11 +2,11 @@ import json
 from collections import Counter
 
 # Load the JSON data
-with open("word_list_no_hard.json", "r", encoding="utf-8") as file:
+with open("clean_wordlist.json", "r", encoding="utf-8") as file:
     data = json.load(file)
 
 # Extract all words
-all_words = [entry["word"] for entry in data["words"]]
+all_words = [entry["word"] for entry in data]
 
 # Count occurrences
 word_counts = Counter(all_words)

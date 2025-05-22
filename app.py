@@ -20,30 +20,29 @@ def index():
 def start_game():
     data = request.get_json()
     difficulty = data.get("difficulty", "easy")
-    category = data.get("category", "")
+    category = data.get("category", "animal")
+    words = [
+        item["word"] for item in word_data
+        if item["difficulty"].lower() == difficulty.lower() and item["category"].lower() == category.lower()
+    ]
 
+    if not words:
+        return jsonify({"error": "No words found for this combination"}), 400
+
+    selected_word = random.choice(words)
 
     # Prompt to generate word and description
     start_prompt = f"""
-You are a professional word game master. Your task is to set up a guessing challenge based on the difficulty level: {difficulty.upper()} and also based on the chosen category: {category}.
+You are a professional word game master. Your task is to set up a guessing challenge based on the word: {selected_word}, difficulty level: {difficulty.upper()} and also based on the chosen category: {category}.
 
-First, select one English noun according to this difficulty {difficulty.upper()} in the selected '{category}':
-- Easy: A very common, everyday object or concept.
-- Medium: A less common, slightly abstract, or specialized noun.
-- Hard: A rare, complex, or abstract noun.
-- choose the word based on the category: For example, if the category is "animals", choose a word related to animals. If the category is "Cities", choose a city name. If the category is "Food", choose a food item.
-Do not explain your choice. Simply remember the word internally. 
-
-Next, describe the word without saying the word itself::
+Describe word : {selected_word} without saying {selected_word} itself:
 - Start with this sentence: "I have a word in my mind. Let me explain it to you!"
--You are not allowed to use the word itself, parts of the word, or obvious synonyms.
-- Write a short, clear description without using the word itself, parts of the word, or obvious synonyms.
+-You are not allowed to use the {selected_word} itself, parts of the {selected_word}, or obvious synonyms.
+- Explain simply and do not write sound effects.
+- Write a short, clear description without using the {selected_word} itself, parts of the {selected_word}, or obvious synonyms.
 - Focus on what the word is, what it does, or where you find it.
 - No emotions,roleplay, questions, or direct hints. With a little bit of fun. 
 - Minimum 2 sentences, Maximum 3 to 4 sentences. Around 50 words.
-
-Finally, output your result exactly in this JSON format:
-{{"word": "[the word]", "description": "[the description]"}}
 """
 
     response = requests.post(OLLAMA_API_URL, json={
@@ -54,20 +53,9 @@ Finally, output your result exactly in this JSON format:
 
     raw_response = response.json().get("response", "")
 
-    # Try to parse the LLM response safely
-    try:
-        # Clean possible unwanted text
-        raw_response = raw_response.strip()
-        if not raw_response.startswith('{'):
-            raw_response = raw_response[raw_response.find('{'):]
-        game_data = json.loads(raw_response)
-        word = game_data.get("word", "").strip().lower()
-        description = game_data.get("description", "").strip()
-    except Exception as e:
-        word = ""
-        description = "Sorry, something went wrong when generating the word."
-
-    return jsonify({"description": description, "answer": word})
+    description = raw_response.strip()
+        
+    return jsonify({"description": description, "answer": selected_word})
 
 @app.route('/guess', methods=['POST'])
 def ask_llama_to_guess():

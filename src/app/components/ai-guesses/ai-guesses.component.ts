@@ -13,12 +13,14 @@ import { LoggingService } from "../../services/logging.service";
   styleUrls: ["./ai-guesses.component.css"],
 })
 export class AiGuessesComponent {
-  selectedCategory: string = "Animal"; // Placeholder, can be dynamically set
+  @Input() currentCategory: string = "animal";
   isAiGuessCorrect = false;
+  isThinking: boolean = false;
+  isHintPhase: boolean = false;
   fetchWordForUserToDescribe(): void {
     this.gameService
       .fetchWord({
-        category: this.selectedCategory,
+        category: this.currentCategory,
         difficulty: this.currentDifficulty,
       })
       .subscribe((response) => {
@@ -28,10 +30,8 @@ export class AiGuessesComponent {
   userDescription = "";
   userHint = "";
   aiGuess = "";
-  score = 6;
   feedback = "";
   timer: any;
-  showHintInput = false;
   username = localStorage.getItem("username") || "Guest";
   @Input() roundNumber: number = 1;
   @Input() currentDifficulty = "";
@@ -46,6 +46,7 @@ export class AiGuessesComponent {
   @Output() gameOverEvent = new EventEmitter<void>();
   gameOver = false;
   localWrongGuesses = 0;
+
   constructor(
     public gameService: GameService,
     private loggingService: LoggingService
@@ -61,6 +62,15 @@ export class AiGuessesComponent {
       this.feedback = "Please write at least 3 words in your description.";
       return;
     }
+
+    this.isThinking = true;
+    const guessButton = document.querySelector(
+      ".guess-button"
+    ) as HTMLButtonElement;
+    if (guessButton) {
+      guessButton.classList.add("disabled");
+    }
+    this.isHintPhase = false;
     this.startTimer();
     this.loggingService.logEvent("aiGuessRoundStarted", {
       roundNumber: this.roundNumber,
@@ -68,10 +78,20 @@ export class AiGuessesComponent {
       description: this.userDescription,
       phase: "ai-guess",
     });
-    this.gameService.makeGuess(this.userDescription).subscribe((response) => {
+
+    this.makeAiGuess(this.userDescription);
+  }
+
+  makeAiGuess(input: string) {
+    this.gameService.makeGuess(input).subscribe((response) => {
       this.aiGuess = response.guess;
-      this.showHintInput = false;
-      this.feedback = "";
+      this.isThinking = false;
+      const guessButton = document.querySelector(
+        ".guess-button"
+      ) as HTMLButtonElement;
+      if (guessButton) {
+        guessButton.classList.remove("disabled");
+      }
       this.loggingService.logEvent("aiGuessMade", {
         guess: response.guess,
         roundNumber: this.roundNumber,
@@ -79,31 +99,29 @@ export class AiGuessesComponent {
         timeTaken: 60 - this.aiGuessTimeLeft,
         phase: "ai-guess",
       });
+
       this.pauseTimer();
-      // Automatic correctness checking
+
       this.isAiGuessCorrect =
-        this.aiGuess.toLowerCase().trim() ===
-        this.correctWord.toLowerCase().trim();
+        response.guess.trim().toLowerCase() ===
+        this.correctWord.trim().toLowerCase();
 
       if (this.isAiGuessCorrect) {
         this.feedback = "✅ Correct!";
         this.gameService.aiStats.correct++;
-        this.score += 2;
         setTimeout(() => {
-          this.userDescription = "";
-          this.aiGuess = "";
-          this.feedback = "";
-          this.isAiGuessCorrect = false;
-          this.fetchWordForUserToDescribe();
+          this.resetStateForNextWord();
         }, 3000);
       } else {
         this.feedback = "❌ Wrong. Try giving a hint!";
-        this.gameService.aiStats.wrong++;
+
         this.localWrongGuesses++;
-        this.score = Math.max(0, this.score - 1);
-        if (this.localWrongGuesses >= 2 && this.hintUsed < 3) {
-          this.showHintInput = true;
+        if (this.localWrongGuesses === 2) {
+          this.isHintPhase = true;
+          this.feedback = "AI: I'm not sure. Can you give me a hint?";
         }
+        this.gameService.aiStats.wrong++;
+
         if (this.hintUsed >= 3) {
           this.feedback = `The correct word was: ${this.correctWord}`;
         }
@@ -111,12 +129,9 @@ export class AiGuessesComponent {
     });
   }
 
-  // handleFeedback removed: now handled automatically in submitDescription
-
   submitHint() {
-    if (!this.userHint.trim()) {
-      return;
-    }
+    if (!this.userHint.trim()) return;
+
     this.hintUsed++;
     this.loggingService.logEvent("hintProvidedByUser", {
       hintNumber: this.hintUsed,
@@ -125,10 +140,23 @@ export class AiGuessesComponent {
       phase: "ai-guess",
       hint: this.userHint,
     });
-    this.aiGuess += " " + this.userHint;
+
+    const enhancedInput = this.userDescription + " HINT: " + this.userHint;
     this.userHint = "";
-    this.showHintInput = false;
-    this.submitDescription();
+    this.isHintPhase = false;
+
+    this.makeAiGuess(enhancedInput);
+  }
+
+  resetStateForNextWord() {
+    this.userDescription = "";
+    this.aiGuess = "";
+    this.feedback = "";
+    this.isAiGuessCorrect = false;
+    this.localWrongGuesses = 0;
+    this.hintUsed = 0;
+    this.isHintPhase = false;
+    this.fetchWordForUserToDescribe();
   }
 
   goBack() {

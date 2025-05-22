@@ -6,7 +6,7 @@
     Round {{ roundNumber }} / 18 — {{ currentDifficulty | titlecase }}
   </h2>
 
-  <ng-container *ngIf="isUserTurn; else aiTurn">
+  <ng-container *ngIf="!isUserGuess">
     <app-ai-guesses
       [roundNumber]="roundNumber"
       (roundCompleted)="nextRound()"
@@ -15,10 +15,11 @@
       (timerChanged)="onTimerChanged($event)"
       [currentDifficulty]="currentDifficulty"
       (gameOverEvent)="onGameOver()"
+      [currentCategory]="currentAICategory"
     ></app-ai-guesses>
   </ng-container>
 
-  <ng-template #aiTurn>
+  <ng-container *ngIf="isUserGuess">
     <app-user-guesses
       [roundNumber]="roundNumber"
       [categoryUsage]="userGuessCategoryUsage"
@@ -29,5 +30,5 @@
       [currentDifficulty]="currentDifficulty"
       (gameOverEvent)="onGameOver()"
     ></app-user-guesses>
-  </ng-template>
+  </ng-container>
 </div>
