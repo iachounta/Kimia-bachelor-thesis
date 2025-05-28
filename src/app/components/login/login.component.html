@@ -1,13 +1,20 @@
 <div class="login-wrapper">
   <div class="login-container">
-    <h2>Welcome to the Word Game</h2>
+
+    <h2>
+      <i class="fa-solid fa-robot"></i>
+      WORD BATTLE
+      <i class="fa-solid fa-puzzle-piece"></i>
+      
+      
+    </h2>
     <label for="username">Enter your name to start:</label>
     <input id="username" [(ngModel)]="username" placeholder="Your name" />
     <button (click)="startGame()">Start Game</button>
   </div>
 
   <div class="game-rules">
-    <h3>📜 Game Rules</h3>
+    <h3><i class="fa-solid fa-triangle-exclamation"></i> Game Rules</h3>
     <ul>
       <li>
         The game has <strong>3 difficulty levels</strong>: Easy, Medium, Hard.
@@ -22,8 +29,8 @@
       </li>
       <li>You and the AI each start with <strong>60 seconds</strong>.</li>
       <li>Time runs only on the active player's turn.</li>
-      <li><strong>Wrong answers:</strong> -10 seconds</li>
-      <li><strong>Hint usage:</strong> -5 seconds</li>
+      <li><strong>Wrong answers:</strong> -5 seconds</li>
+      <li><strong>Hint usage:</strong> -2 seconds</li>
       <li>If your time runs out, the game ends immediately.</li>
       <li>The winner is the one with more time left at the end!</li>
     </ul>

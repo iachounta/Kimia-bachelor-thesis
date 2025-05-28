@@ -4,29 +4,22 @@ import { FormsModule } from "@angular/forms";
 import { GameService } from "../../services/game.service";
 import { GameHeaderComponent } from "../shared/game-header/game-header.component";
 import { LoggingService } from "../../services/logging.service";
+import { SoundService } from "../../services/sound.service";
 
 @Component({
   selector: "app-ai-guesses",
   standalone: true,
   imports: [CommonModule, FormsModule, GameHeaderComponent],
   templateUrl: "./ai-guesses.component.html",
-  styleUrls: ["./ai-guesses.component.css"],
+  styleUrls: ["./ai-guesses.component.scss"],
 })
 export class AiGuessesComponent {
+  @Input() isAiGuessMode: boolean = false;
   @Input() currentCategory: string = "animal";
   isAiGuessCorrect = false;
   isThinking: boolean = false;
   isHintPhase: boolean = false;
-  fetchWordForUserToDescribe(): void {
-    this.gameService
-      .fetchWord({
-        category: this.currentCategory,
-        difficulty: this.currentDifficulty,
-      })
-      .subscribe((response) => {
-        this.correctWord = response.word;
-      });
-  }
+
   userDescription = "";
   userHint = "";
   aiGuess = "";
@@ -44,16 +37,33 @@ export class AiGuessesComponent {
     aiGuessTimeDiff?: number;
   }>();
   @Output() gameOverEvent = new EventEmitter<void>();
+  @Output() roundCompleted = new EventEmitter<void>();
   gameOver = false;
   localWrongGuesses = 0;
 
   constructor(
     public gameService: GameService,
-    private loggingService: LoggingService
+    private loggingService: LoggingService,
+    private soundService: SoundService
   ) {}
 
   ngOnInit() {
     this.fetchWordForUserToDescribe();
+    this.logStartRound();
+  }
+
+  fetchWordForUserToDescribe(): void {
+    this.isThinking = true;
+    this.resetStateForNextWord();
+    this.gameService
+      .fetchWord({
+        category: this.currentCategory,
+        difficulty: this.currentDifficulty,
+      })
+      .subscribe((response) => {
+        this.correctWord = response.word;
+        this.isThinking = false;
+      });
   }
 
   submitDescription() {
@@ -64,41 +74,26 @@ export class AiGuessesComponent {
     }
 
     this.isThinking = true;
-    const guessButton = document.querySelector(
-      ".guess-button"
-    ) as HTMLButtonElement;
-    if (guessButton) {
-      guessButton.classList.add("disabled");
-    }
     this.isHintPhase = false;
-    this.startTimer();
     this.loggingService.logEvent("aiGuessRoundStarted", {
       roundNumber: this.roundNumber,
       difficulty: this.currentDifficulty,
       description: this.userDescription,
+      word: this.correctWord,
       phase: "ai-guess",
+      wordCount: this.userDescription.trim().split(/\s+/).length,
     });
-
     this.makeAiGuess(this.userDescription);
   }
 
   makeAiGuess(input: string) {
+    if (this.localWrongGuesses === 1) {
+      input = input + " The word is not " + this.aiGuess;
+    }
+    this.startTimer();
     this.gameService.makeGuess(input).subscribe((response) => {
       this.aiGuess = response.guess;
       this.isThinking = false;
-      const guessButton = document.querySelector(
-        ".guess-button"
-      ) as HTMLButtonElement;
-      if (guessButton) {
-        guessButton.classList.remove("disabled");
-      }
-      this.loggingService.logEvent("aiGuessMade", {
-        guess: response.guess,
-        roundNumber: this.roundNumber,
-        difficulty: this.currentDifficulty,
-        timeTaken: 60 - this.aiGuessTimeLeft,
-        phase: "ai-guess",
-      });
 
       this.pauseTimer();
 
@@ -106,19 +101,34 @@ export class AiGuessesComponent {
         response.guess.trim().toLowerCase() ===
         this.correctWord.trim().toLowerCase();
 
+      this.loggingService.logEvent("aiGuessMade", {
+        guess: response.guess,
+        isCorrect: this.isAiGuessCorrect,
+        roundNumber: this.roundNumber,
+        difficulty: this.currentDifficulty,
+        timeTaken: 60 - this.aiGuessTimeLeft,
+        phase: "ai-guess",
+        guessCount: this.localWrongGuesses + 1,
+        wordGuessed: this.correctWord,
+      });
+
       if (this.isAiGuessCorrect) {
-        this.feedback = "✅ Correct!";
+        this.feedback = " Correct!";
+        this.soundService.playCorrect();
         this.gameService.aiStats.correct++;
         setTimeout(() => {
-          this.resetStateForNextWord();
+          this.nextRound();
         }, 3000);
       } else {
-        this.feedback = "❌ Wrong. Try giving a hint!";
+        this.soundService.playWrong();
+        this.feedback = "❌ Wrong.";
 
         this.localWrongGuesses++;
         if (this.localWrongGuesses === 2) {
-          this.isHintPhase = true;
-          this.feedback = "AI: I'm not sure. Can you give me a hint?";
+          setTimeout(() => {
+            this.isHintPhase = true;
+            this.feedback = "AI: I'm not sure. Can you give me a hint?";
+          }, 3000);
         }
         this.gameService.aiStats.wrong++;
 
@@ -132,13 +142,12 @@ export class AiGuessesComponent {
   submitHint() {
     if (!this.userHint.trim()) return;
 
-    this.hintUsed++;
     this.loggingService.logEvent("hintProvidedByUser", {
-      hintNumber: this.hintUsed,
       roundNumber: this.roundNumber,
       difficulty: this.currentDifficulty,
       phase: "ai-guess",
       hint: this.userHint,
+      wordCount: this.userHint.trim().split(/\s+/).length,
     });
 
     const enhancedInput = this.userDescription + " HINT: " + this.userHint;
@@ -150,13 +159,13 @@ export class AiGuessesComponent {
 
   resetStateForNextWord() {
     this.userDescription = "";
+    this.userHint = "";
     this.aiGuess = "";
     this.feedback = "";
     this.isAiGuessCorrect = false;
     this.localWrongGuesses = 0;
     this.hintUsed = 0;
     this.isHintPhase = false;
-    this.fetchWordForUserToDescribe();
   }
 
   goBack() {
@@ -193,17 +202,34 @@ export class AiGuessesComponent {
   }
 
   handleSkip() {
-    this.userGuessTimeLeft = Math.max(0, this.userGuessTimeLeft - 5);
+    this.timerChanged.emit({ userGuessTimeDiff: -2 });
     this.gameService.userStats.skipped++;
     this.loggingService.logEvent("userSkippedWord", {
       roundNumber: this.roundNumber,
       difficulty: this.currentDifficulty,
       phase: "ai-guess",
       reason: "user_clicked_skip",
+      descriptionLength: this.userDescription.trim().length,
     });
     this.fetchWordForUserToDescribe();
-    this.userDescription = "";
-    this.aiGuess = "";
-    this.feedback = "";
+  }
+
+  nextRound() {
+    this.roundCompleted.emit();
+    setTimeout(() => {
+      this.fetchWordForUserToDescribe();
+      this.logStartRound();
+    }, 200);
+  }
+
+  logStartRound() {
+    this.loggingService.logEvent("newRoundStarted", {
+      roundNumber: this.roundNumber,
+      difficulty: this.currentDifficulty,
+      category: this.currentCategory,
+      aiGuess: this.aiGuess,
+      timeLeft: this.aiGuessTimeLeft,
+      phase: "ai-guess",
+    });
   }
 }

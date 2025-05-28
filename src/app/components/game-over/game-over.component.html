@@ -1,5 +1,32 @@
 <div class="game-over-container">
-  <h1>Game Over</h1>
-  <p>{{ message }}</p>
-  <button (click)="startGame()">Play Again</button>
+  <h1 class="game-over-title">Game Over</h1>
+  <p class="game-over-message">{{ message }}</p>
+  <div class="stats-summary">
+    <h2>Game Summary</h2>
+    <div class="stat-group">
+      <h3>User Stats</h3>
+      <p>Correct: {{ gameService.userStats.correct }}</p>
+      <p>Wrong: {{ gameService.userStats.wrong }}</p>
+      <p>Skipped: {{ gameService.userStats.skipped }}</p>
+      <p>
+        Time Left:
+        {{
+          gameService.userGuessTimeLeft > 0 ? gameService.userGuessTimeLeft : 0
+        }}
+        seconds
+      </p>
+    </div>
+    <div class="stat-group">
+      <h3>AI Stats</h3>
+      <p>Correct: {{ gameService.aiStats.correct }}</p>
+      <p>Wrong: {{ gameService.aiStats.wrong }}</p>
+      <p>Skipped: {{ gameService.aiStats.skipped }}</p>
+      <p>
+        Time Left:
+        {{ gameService.aiGuessTimeLeft > 0 ? gameService.aiGuessTimeLeft : 0 }}
+        seconds
+      </p>
+    </div>
+    <button (click)="startGame()">Play Again</button>
+  </div>
 </div>

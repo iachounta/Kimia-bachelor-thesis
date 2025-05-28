@@ -1,0 +1,61 @@
+.game-header{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    background-color: #1e293b;
+    color: #f1f5f9;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 0 12px rgba(0, 255, 204, 0.2);
+    text-align: center;
+    i{
+        color:#2d685f;
+    }
+    
+    h2{
+        font-size: 2.2rem;
+        letter-spacing: 2px;
+        color: #00ffcc;
+        text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
+    }
+    .game-tracker{
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #334155;
+        background-color: #0f172a;
+        border-radius: 12px;
+        padding: 1.25rem;
+        margin: 1.5rem 0;
+
+        &__user{
+            flex: 1;
+            text-align: left;
+            padding-right: 1rem;
+            border-right: 1px solid #475569;
+        }
+        &__ai{
+            flex: 1; 
+            text-align: right; 
+            padding-left: 1rem
+        }
+        i{
+            color: #00ffcc;
+        }
+    }
+    .game-user-round{
+        text-align: center;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #00ccff;
+        font-family: 'Orbitron', sans-serif;
+        text-shadow: 0 0 6px #00ccff; 
+    }
+
+    .game-round{
+        i{
+            color: #00ccff;
+        }
+        
+    }
+}

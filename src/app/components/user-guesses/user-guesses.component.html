@@ -1,9 +1,10 @@
-<div class="container">
+<div class="user-guess__container">
   <app-category
     *ngIf="currentCategory === ''"
     [categoryUsage]="categoryUsage"
     (categorySelected)="onCategorySelected($event)"
   ></app-category>
+
   <ng-container *ngIf="currentCategory !== ''">
     <app-game-header
       [username]="username"
@@ -23,8 +24,14 @@
     </div>
 
     <!-- Word description -->
-    <div *ngIf="!gameOver" class="description">
+    <div [hidden]="isLoading" *ngIf="!gameOver" class="description">
       {{ description }}
+    </div>
+    <!-- TODO: Skip button -->
+    <div [hidden]="isLoading || localWrongGuesses >= 3" class="skip-container">
+      <button class="skip-button" (click)="handleSkip()">
+        <i class="fa-solid fa-rotate"></i> Change Word
+      </button>
     </div>
 
     <!-- Guess input -->
@@ -48,16 +55,13 @@
       <button
         class="hint-button"
         (click)="getHint()"
-        [disabled]="hints.length >= 1 || localWrongGuesses !== 2"
+        [disabled]="
+          hints.length >= 1 || localWrongGuesses !== 2 || hintUsed > 0
+        "
         title="Up to 3 hints. Each costs 5 seconds."
       >
-        Get Hint (-5 seconds)
+        Get Hint (-2 seconds)
       </button>
-    </div>
-
-    <!-- TODO: Skip button -->
-    <div *ngIf="!gameOver" class="skip-container">
-      <button class="skip-button">Skip</button>
     </div>
 
     <!-- Hints (alternate) -->
@@ -71,4 +75,11 @@
   <div class="back-button">
     <button (click)="goBack()">Back to Start</button>
   </div>
+  <button
+    class="next-button"
+    [hidden]="isLoading || localWrongGuesses < 3"
+    (click)="nextRound()"
+  >
+    Next
+  </button>
 </div>

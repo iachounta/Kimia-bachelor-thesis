@@ -6,13 +6,14 @@ import { GameService } from "../../services/game.service";
 import { GameHeaderComponent } from "../shared/game-header/game-header.component";
 import { CategoryComponent } from "../category/category.component";
 import { LoggingService } from "../../services/logging.service";
+import { SoundService } from "../../services/sound.service";
 
 @Component({
   selector: "app-user-guesses",
   standalone: true,
   imports: [CommonModule, FormsModule, GameHeaderComponent, CategoryComponent],
   templateUrl: "./user-guesses.component.html",
-  styleUrls: ["./user-guesses.component.css"],
+  styleUrls: ["./user-guesses.component.scss"],
 })
 export class UserGuessesComponent implements OnInit {
   description = "";
@@ -22,7 +23,6 @@ export class UserGuessesComponent implements OnInit {
   feedback = "";
   isCorrect = false;
 
-  categories = ["Animals", "Food", "Places"];
   @Input() currentCategory: string = "";
   @Input() categoryUsage: { [key: string]: number } = {
     Animals: 0,
@@ -33,6 +33,7 @@ export class UserGuessesComponent implements OnInit {
   @Input() currentDifficulty = "";
   @Input() userGuessTimeLeft = 60;
   @Input() aiGuessTimeLeft = 60;
+  @Input() isAiGuessMode: boolean = false;
   @Output() timerChanged = new EventEmitter<{
     userGuessTimeDiff?: number;
     aiGuessTimeDiff?: number;
@@ -42,6 +43,7 @@ export class UserGuessesComponent implements OnInit {
   username = localStorage.getItem("username") || "Guest";
   hintUsed = 0;
   localWrongGuesses = 0;
+  hintGivenThisRound: boolean = false;
 
   @Input() roundNumber: number = 1;
   @Output() roundCompleted = new EventEmitter<void>();
@@ -49,7 +51,8 @@ export class UserGuessesComponent implements OnInit {
   constructor(
     public gameService: GameService,
     private router: Router,
-    private loggingService: LoggingService
+    private loggingService: LoggingService,
+    private soundService: SoundService
   ) {}
 
   ngOnInit() {}
@@ -85,14 +88,20 @@ export class UserGuessesComponent implements OnInit {
   }
 
   onCategorySelected(category: string) {
-    console.log("Selected category:", category);
     this.currentCategory = category;
     this.pauseTimer();
     this.startNewGame();
   }
 
-  startNewGame() {
+  startNewGame(isFromSkip: boolean = false) {
+    this.pauseTimer();
     this.description = "";
+    this.hints = [];
+    this.hintUsed = 0;
+    this.hintGivenThisRound = false;
+    this.feedback = "";
+    this.isCorrect = false;
+    this.localWrongGuesses = 0;
 
     const currentDifficulty = this.getCurrentDifficulty(this.roundNumber);
     this.isLoading = true;
@@ -102,17 +111,21 @@ export class UserGuessesComponent implements OnInit {
       .subscribe((response) => {
         this.description = response.description;
         this.correctWord = response.answer;
-        this.hints = [];
-        this.feedback = "";
-        this.isCorrect = false;
         this.isLoading = false;
         this.startTimer();
-        this.loggingService.logEvent("newRoundStarted", {
-          roundNumber: this.roundNumber,
-          category: this.currentCategory,
-          difficulty: currentDifficulty,
-          description: this.description,
-        });
+        if (!isFromSkip) {
+          this.loggingService.logEvent("newRoundStarted", {
+            roundNumber: this.roundNumber,
+            phase: "user-guess",
+            category: this.currentCategory,
+            difficulty: currentDifficulty,
+            description: this.description,
+            timeLeft: this.userGuessTimeLeft,
+            wasSkipped: isFromSkip,
+            descriptionWordCount: response.description.trim().split(/\s+/)
+              .length,
+          });
+        }
       });
   }
 
@@ -122,6 +135,7 @@ export class UserGuessesComponent implements OnInit {
     const answer = this.correctWord.trim().toLowerCase();
 
     if (guess === answer) {
+      this.pauseTimer();
       this.loggingService.logEvent("userGuessSubmitted", {
         guess: guess,
         isCorrect: true,
@@ -130,10 +144,13 @@ export class UserGuessesComponent implements OnInit {
         phase: "user-guess",
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
+        guessCount: this.localWrongGuesses + 1,
+        hintUsed: this.hintUsed > 0,
+        hintGivenThisRound: this.hintGivenThisRound,
       });
 
       this.gameService.userStats.correct++;
-      this.playCorrectSound();
+      this.soundService.playCorrect();
       this.timerChanged.emit({ userGuessTimeDiff: 10 });
       this.feedback = "Correct! +10 seconds ⏱️";
       this.isCorrect = true;
@@ -151,71 +168,50 @@ export class UserGuessesComponent implements OnInit {
         phase: "user-guess",
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
+        guessCount: this.localWrongGuesses + 0,
+        hintUsed: this.hintUsed > 0,
+        hintGivenThisRound: this.hintGivenThisRound,
       });
       this.localWrongGuesses++;
       this.gameService.userStats.wrong++;
-      this.playWrongSound();
-      this.timerChanged.emit({ userGuessTimeDiff: -10 });
-      this.feedback = "Wrong! Try again ⏱️ -10 seconds!";
+      this.soundService.playWrong();
+
+      if (this.localWrongGuesses === 3) {
+        this.loggingService.logEvent("revealAnswer", {
+          correctAnswer: this.correctWord,
+          roundNumber: this.roundNumber,
+          category: this.currentCategory,
+          phase: "user-guess",
+        });
+        this.feedback =
+          "You have used all your guesses! The correct word was: " +
+          this.correctWord;
+      } else {
+        this.feedback = "Wrong! Try again ⏱️ -5 seconds!";
+      }
+      this.timerChanged.emit({ userGuessTimeDiff: -5 });
     }
 
     this.userGuess = "";
   }
 
   getHint() {
-    if (this.hintUsed < 3) {
-      this.hintUsed++;
-      this.loggingService.logEvent("hintUsed", {
-        hintNumber: this.hintUsed,
-        roundNumber: this.roundNumber,
-        category: this.currentCategory,
-        difficulty: this.currentDifficulty,
-        phase: "user-guess",
-      });
-      this.gameService.getHint(this.correctWord).subscribe((response) => {
-        this.hints.push(response.hint);
-        this.feedback = `Hint: ${response.hint}`;
-      });
-      // TODO: Implement logic for showing the actual hint here
-    } else {
-      this.revealAnswer();
-    }
-  }
-
-  revealAnswer() {
-    this.loggingService.logEvent("revealAnswer", {
-      correctAnswer: this.correctWord,
+    this.hintUsed++;
+    this.loggingService.logEvent("hintUsed", {
       roundNumber: this.roundNumber,
       category: this.currentCategory,
+      difficulty: this.currentDifficulty,
       phase: "user-guess",
+      word: this.correctWord,
+      hintUsed: this.hintUsed, //toDo: hintused check (nemidunam dorose adadesh)
     });
-    this.feedback = `The correct word was: ${this.correctWord}`;
-    this.currentCategory = "";
-    this.roundCompleted.emit();
-  }
-
-  playCorrectSound() {
-    this.playAudio("correct-sound");
-  }
-  playWrongSound() {
-    this.playAudio("wrong");
-  }
-  playApplauseSound() {
-    this.playAudio("applause-sound");
-  }
-  playWinSound() {
-    this.playAudio("win-sound");
-  }
-  playGameOverSound() {
-    this.playAudio("game-over");
-  }
-
-  private playAudio(name: string) {
-    const audio = new Audio();
-    audio.src = `assets/sounds/${name}.wav`;
-    audio.load();
-    audio.play().catch((error) => {
-      console.error("Error playing sound:", error);
+    this.pauseTimer();
+    this.gameService.getHint(this.correctWord).subscribe((response) => {
+      this.hints.push(response.hint);
+      this.feedback = `Hint: ${response.hint}`;
+      this.hintGivenThisRound = true;
+      this.startTimer();
+      hintWordCount: response.hint.trim().split(/\s+/).length; //hint word count check chera bi range
     });
   }
 
@@ -224,7 +220,7 @@ export class UserGuessesComponent implements OnInit {
   }
 
   handleSkip() {
-    this.userGuessTimeLeft = Math.max(0, this.userGuessTimeLeft - 5);
+    this.timerChanged.emit({ userGuessTimeDiff: -2 });
     this.gameService.userStats.skipped++;
     this.loggingService.logEvent("userSkippedWord", {
       roundNumber: this.roundNumber,
@@ -232,10 +228,11 @@ export class UserGuessesComponent implements OnInit {
       category: this.currentCategory,
       reason: "user_clicked_skip",
     });
+    this.startNewGame(true);
+  }
+
+  nextRound() {
+    this.roundCompleted.emit();
     this.startNewGame();
-    this.userGuess = "";
-    this.feedback = "";
-    this.hints = [];
-    this.isCorrect = false;
   }
 }

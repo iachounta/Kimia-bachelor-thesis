@@ -33,20 +33,38 @@ def start_game():
 
     # Prompt to generate word and description
     start_prompt = f"""
-You are a professional word game master. Your task is to set up a guessing challenge based on the word: {selected_word}, difficulty level: {difficulty.upper()} and also based on the chosen category: {category}.
+You are a professional word game master. Your task is to describe a secret word so that a human can guess it—but without using the word itself, parts of the word, or direct synonyms.
 
-Describe word : {selected_word} without saying {selected_word} itself:
-- Start with this sentence: "I have a word in my mind. Let me explain it to you!"
--You are not allowed to use the {selected_word} itself, parts of the {selected_word}, or obvious synonyms.
-- Explain simply and do not write sound effects.
-- Write a short, clear description without using the {selected_word} itself, parts of the {selected_word}, or obvious synonyms.
-- Focus on what the word is, what it does, or where you find it.
-- No emotions,roleplay, questions, or direct hints. With a little bit of fun. 
-- Minimum 2 sentences, Maximum 3 to 4 sentences. Around 50 words.
+The word is: {selected_word}
+Its category is: {category}
+
+Write a short and clear description that matches the following rules:
+- Start with: "I have a word in my mind. Let me explain it to you!"
+- Use simple vocabulary (English B2 level).
+- Write 3 to 4 sentences. Around 50 words.
+- Do not use the secret word, any part of it, or its direct synonyms.
+- Do not ask questions or use sound effects.
+- Be informative but also slightly playful.
+
+Here are some examples:
+
+### Example 1 (word: elephant, category: animal, difficulty: medium)
+I have a word in my mind. Let me explain it to you!  
+This is a very large animal that lives in warm places. It has big ears and a long nose that it uses to grab things or spray water. You can often see it in zoos or in nature documentaries.
+
+### Example 2 (word: volcano, category: nature, difficulty: hard)
+I have a word in my mind. Let me explain it to you!  
+This is something found on mountains that sometimes becomes very dangerous. It can throw out hot liquid rock and smoke. People often stay away when it becomes active.
+
+### Example 3 (word: scissors, category: object, difficulty: easy)
+I have a word in my mind. Let me explain it to you!  
+It’s a small tool used at school or home. It has two sharp parts that you move with your fingers to cut paper or fabric. You should always use it carefully.
+
+Now, write a new description for the word: {selected_word}.
 """
 
     response = requests.post(OLLAMA_API_URL, json={
-        "model": "llama2",
+        "model": "gemma3:1b",
         "prompt": start_prompt,
         "stream": False
     })
@@ -71,7 +89,7 @@ Respond with only one word. Do not explain your reasoning. Do not add extra word
 """
 
     response = requests.post(OLLAMA_API_URL, json={
-    "model": "llama2",
+    "model": "gemma3:1b",
     "prompt": guess_prompt,
     "stream": False,
     "temperature": 0.8,  # ToDo: this is added but I'm not sure if it works
@@ -107,12 +125,17 @@ def get_hint():
     word = data.get("word", "")
 
     hint_prompt = f"""
-You are a professional word game master. Provide a subtle, short hint for the word '{word}' without using the word itself, parts of the word, or direct synonyms.
-The hint should be slightly cryptic but still understandable. Maximum one short sentence.
+You are a word game master. Your task is to give a short and subtle hint for the word '{word}'.
+
+Rules:
+- Do not use the word itself, any part of it, or obvious synonyms.
+- Keep it cryptic but guessable.
+- Only one short sentence. No questions, no lists, no sound effects.
+- Use metaphor, function, context,example or related ideas to inspire curiosity.
 """
 
     response = requests.post(OLLAMA_API_URL, json={
-    "model": "llama2",
+    "model": "gemma3:1b",
     "prompt": hint_prompt,
     "stream": False,
     #"temperature": 0.8,  # ToDo: this is added but I'm not sure if it works
@@ -139,4 +162,4 @@ def log_event():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(host="0.0.0.0",debug=True, port=5001)

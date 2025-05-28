@@ -1,49 +1,35 @@
-<div
-  class="game-header"
-  style="
-    font-family: 'Roboto Mono', monospace;
-    font-size: 1.05rem;
-    font-weight: 600;
-  "
->
-  <h2 style="text-align: center">🎯 Word Battle</h2>
+<div class="game-header">
+  <h2>
+  <i class="fa-solid fa-robot"></i>
+  WORD BATTLE
+  <i class="fa-solid fa-puzzle-piece"></i>
+  </h2>
 
-  <p style="text-align: center">
+  <p>
     <strong>Difficulty:</strong> {{ difficulty }} | <strong>Category:</strong>
     {{ currentCategory }}
   </p>
 
-  <div
-    style="
-      display: flex;
-      justify-content: space-between;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 1rem;
-      margin: 1rem 0;
-    "
-  >
-    <div
-      style="
-        flex: 1;
-        text-align: left;
-        padding-right: 1rem;
-        border-right: 1px solid #ddd;
-      "
-    >
-      <strong>🧍 {{ username }}</strong
+  <div class="game-tracker">
+    <div class="game-tracker__user">
+      <strong><i class="fa-solid fa-user"></i> {{ username }}</strong
       ><br />
-      ✅ Correct: {{ userStats.correct }}<br />
-      ❌ Wrong: {{ userStats.wrong }}<br />
-      ⏳ Time Left: {{ userTimeLeft }}s
+      <i class="fa-solid fa-check"></i> Correct: {{ userStats.correct }}<br />
+      <i class="fa-solid fa-xmark"></i> Wrong: {{ userStats.wrong }}<br />
+      <i class="fa-solid fa-hourglass-half"></i> Time Left: {{ userTimeLeft }}s
     </div>
-    <div style="flex: 1; text-align: right; padding-left: 1rem">
-      <strong>🤖 AI</strong><br />
-      ✅ Correct: {{ aiStats.correct }}<br />
-      ❌ Wrong: {{ aiStats.wrong }}<br />
-      ⏳ Time Left: {{ aiTimeLeft }}s
+    <div class="game-tracker__ai">
+      <strong>AI </strong> <i class="fa-solid fa-robot"></i><br />
+      Correct: {{ aiStats.correct }} <i class="fa-solid fa-check"></i> <br />
+      Wrong: {{ aiStats.wrong }} <i class="fa-solid fa-xmark"></i><br />
+      Time Left: {{ aiTimeLeft }}s <i class="fa-solid fa-hourglass-half"></i>
     </div>
   </div>
+  <div class="game-user-round">
+    {{ isAiGuessMode ? 'Your Turn to Describe!' : 'Your Turn to Guess!' }}
+  </div>
 
-  <p style="text-align: center">🔄 Round: {{ round }} / 18</p>
+  <p class="game-round">
+    <i class="fa-solid fa-repeat"></i> Round: {{ round }} / 18
+  </p>
 </div>

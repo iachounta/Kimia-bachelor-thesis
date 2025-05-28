@@ -34,7 +34,7 @@
             "outputPath": "dist/demo",
             "polyfills": ["zone.js"],
             "scripts": [],
-            "styles": ["src/global_styles.css"],
+            "styles": ["src/global_styles.css", "node_modules/@fortawesome/fontawesome-free/css/all.min.css"],
             "tsConfig": "tsconfig.app.json"
           }
         },

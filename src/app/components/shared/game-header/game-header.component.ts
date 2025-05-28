@@ -6,7 +6,7 @@ import { CommonModule } from "@angular/common";
   standalone: true,
   imports: [CommonModule],
   templateUrl: "./game-header.component.html",
-  styleUrls: ["./game-header.component.css"],
+  styleUrls: ["./game-header.component.scss"],
 })
 export class GameHeaderComponent {
   @Input() username: string = "";
@@ -19,4 +19,5 @@ export class GameHeaderComponent {
   @Input() currentCategory: string = "";
   @Input() userStats!: { correct: number; wrong: number; skipped: number };
   @Input() aiStats!: { correct: number; wrong: number; skipped: number };
+  @Input() isAiGuessMode: boolean = false;
 }

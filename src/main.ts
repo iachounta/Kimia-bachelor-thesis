@@ -16,7 +16,6 @@ const routes: Routes = [
   { path: "winner", component: WinnerComponent },
   { path: "game", component: GameComponent },
   { path: "game-over", component: GameOverComponent },
-  // other routes...
 ];
 
 @Component({

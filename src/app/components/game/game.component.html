@@ -1,21 +1,19 @@
 <div
   class="game-container"
-  style="max-width: 900px; margin: auto; padding: 2rem; font-family: sans-serif"
+  style="max-width: 900px; margin: auto; margin-top: 12.5rem; padding: 2rem"
 >
-  <h2 style="text-align: center; margin-bottom: 1.5rem">
-    Round {{ roundNumber }} / 18 — {{ currentDifficulty | titlecase }}
-  </h2>
 
   <ng-container *ngIf="!isUserGuess">
     <app-ai-guesses
       [roundNumber]="roundNumber"
       (roundCompleted)="nextRound()"
-      [userGuessTimeLeft]="userGuessTimeLeft"
-      [aiGuessTimeLeft]="aiGuessTimeLeft"
+      [userGuessTimeLeft]="gameService.userGuessTimeLeft"
+      [aiGuessTimeLeft]="gameService.aiGuessTimeLeft"
       (timerChanged)="onTimerChanged($event)"
       [currentDifficulty]="currentDifficulty"
       (gameOverEvent)="onGameOver()"
       [currentCategory]="currentAICategory"
+      [isAiGuessMode]="true"
     ></app-ai-guesses>
   </ng-container>
 
@@ -23,12 +21,13 @@
     <app-user-guesses
       [roundNumber]="roundNumber"
       [categoryUsage]="userGuessCategoryUsage"
-      [userGuessTimeLeft]="userGuessTimeLeft"
-      [aiGuessTimeLeft]="aiGuessTimeLeft"
+      [userGuessTimeLeft]="gameService.userGuessTimeLeft"
+      [aiGuessTimeLeft]="gameService.aiGuessTimeLeft"
       (roundCompleted)="nextRound()"
       (timerChanged)="onTimerChanged($event)"
       [currentDifficulty]="currentDifficulty"
       (gameOverEvent)="onGameOver()"
+      [isAiGuessMode]="false" 
     ></app-user-guesses>
   </ng-container>
 </div>
