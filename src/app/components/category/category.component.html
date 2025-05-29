@@ -8,7 +8,10 @@
       (click)="selectCategory(category)"
       [ngClass]="{ 'category-done': categoryUsage[category] === 3 }"
     >
-      {{ category }} ({{ CATEGORY_LIMIT - categoryUsage[category] }} left)
+      {{ categoryLabel[category] }} ({{
+        CATEGORY_LIMIT - categoryUsage[category]
+      }}
+      left)
     </li>
   </ul>
 </div>

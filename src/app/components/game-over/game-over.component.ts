@@ -11,6 +11,7 @@ import { LoggingService } from "../../services/logging.service";
 })
 export class GameOverComponent implements OnInit {
   reason: string | null = null;
+  roundNumber: number | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,14 +23,19 @@ export class GameOverComponent implements OnInit {
 
   ngOnInit(): void {
     this.reason = this.route.snapshot.queryParamMap.get("reason");
+    this.roundNumber = Number(
+      this.route.snapshot.queryParamMap.get("roundNumber")
+    );
     this.soundService.playGameOver();
     this.loggingService.logEvent("gameOver", {
       reason: this.reason,
-      withStats: this.gameService.userStats,
+      userStats: this.gameService.userStats,
+      aiStats: this.gameService.aiStats,
       //roundNumber: this.gameService.roundNumber, //TODO: what is the issue with this? mikham moghe game over round number biad hatman
       winner: this.reason === "ai-timeout" ? "user" : "ai",
       aiTimeLeft: this.gameService.aiGuessTimeLeft,
       userTimeLeft: this.gameService.userGuessTimeLeft,
+      roundNumber: this.roundNumber,
     });
   }
 
@@ -54,6 +60,7 @@ export class GameOverComponent implements OnInit {
   }
 
   startGame() {
+    this.loggingService.logEvent("playAgainClicked", {});
     this.gameService.resetGame();
     this.router.navigate(["/"]);
   }

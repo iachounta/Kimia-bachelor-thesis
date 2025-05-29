@@ -40,7 +40,7 @@ Its category is: {category}
 
 Write a short and clear description that matches the following rules:
 - Start with: "I have a word in my mind. Let me explain it to you!"
-- Use simple vocabulary (English B2 level).
+- Use very simple vocabulary (English B1 level).
 - Write 3 to 4 sentences. Around 50 words.
 - Do not use the secret word, any part of it, or its direct synonyms.
 - Do not ask questions or use sound effects.
@@ -83,7 +83,7 @@ def ask_llama_to_guess():
     guess_prompt = f"""
 You are a highly intelligent language model playing a guessing game. Based on the following description, guess the English noun that fits best.
 
-Description: {user_description}
+Description: {user_description}. Read the description carefully and think about the context, objects, or concepts it describes.
 
 Respond with only one word. Do not explain your reasoning. Do not add extra words or phrases.
 """
@@ -129,9 +129,10 @@ You are a word game master. Your task is to give a short and subtle hint for the
 
 Rules:
 - Do not use the word itself, any part of it, or obvious synonyms.
-- Keep it cryptic but guessable.
-- Only one short sentence. No questions, no lists, no sound effects.
-- Use metaphor, function, context,example or related ideas to inspire curiosity.
+-Use very simple vocabulary (English B1 level).
+- write somehow guessable give examples like: the word begins with.. or ends with...
+- Only one to two short sentences. No questions, no lists, no sound effects.
+- Use function, context,example or related ideas to inspire curiosity.
 """
 
     response = requests.post(OLLAMA_API_URL, json={

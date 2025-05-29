@@ -38,7 +38,7 @@ export class GameComponent {
 
   CATEGORY_LIMIT = 3;
 
-  roundNumber = 3;
+  roundNumber = 15;
 
   get currentDifficulty(): string {
     if (this.roundNumber <= 6) return "easy";
@@ -60,12 +60,16 @@ export class GameComponent {
     } else {
       this.loggingService.logEvent("gameFinished", {
         totalRounds: this.roundNumber,
+        userStats: this.gameService.userStats,
+        aiStats: this.gameService.aiStats,
+        roundNumber: this.roundNumber,
         timestamp: new Date().toISOString(),
       });
+
       this.playWinSound();
       this.playApplauseSound();
       // You might want to route here if using Angular Router, for example:
-      // this.router.navigate(["/winner"]);
+      this.router.navigate(["/winner"]);
     }
   }
   getRandomCategory(): string {
@@ -99,7 +103,10 @@ export class GameComponent {
       console.log("User guess time left:", this.gameService.userGuessTimeLeft);
       if (this.gameService.userGuessTimeLeft <= 0) {
         this.router.navigate(["/game-over"], {
-          queryParams: { reason: "user-timeout" },
+          queryParams: {
+            reason: "user-timeout",
+            roundNumber: this.roundNumber,
+          },
         });
         return;
       }
@@ -110,7 +117,7 @@ export class GameComponent {
       console.log("User guess time left:", this.gameService.userGuessTimeLeft);
       if (this.gameService.aiGuessTimeLeft <= 0 && !this.isUserGuess) {
         this.router.navigate(["/game-over"], {
-          queryParams: { reason: "ai-timeout" },
+          queryParams: { reason: "ai-timeout", roundNumber: this.roundNumber },
         });
         return;
       }
@@ -127,7 +134,7 @@ export class GameComponent {
   }
   onGameOver(): void {
     this.router.navigate(["/game-over"], {
-      queryParams: { reason: "timeout" },
+      queryParams: { reason: "timeout", roundNumber: this.roundNumber },
     });
   }
 }

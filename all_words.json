@@ -1079,16 +1079,7 @@
     "category": "food",
     "difficulty": "hard"
   },
-  {
-    "word": "cuisine",
-    "category": "food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "decaffeinated",
-    "category": "food",
-    "difficulty": "hard"
-  },
+ 
   {
     "word": "digestif",
     "category": "food",
@@ -1104,21 +1095,8 @@
     "category": "food",
     "difficulty": "hard"
   },
-  {
-    "word": "foie gras",
-    "category": "food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "gastronomy",
-    "category": "food",
-    "difficulty": "hard"
-  },
-  {
-    "word": "hors d'oeuvre",
-    "category": "food",
-    "difficulty": "hard"
-  },
+  
+
   {
     "word": "infusion",
     "category": "food",
@@ -1134,11 +1112,7 @@
     "category": "food",
     "difficulty": "hard"
   },
-  {
-    "word": "marination",
-    "category": "food",
-    "difficulty": "hard"
-  },
+  
   {
     "word": "mirepoix",
     "category": "food",
@@ -1530,7 +1504,7 @@
     "difficulty": "medium"
   },
   {
-    "word": "exhibition hall",
+    "word": "exhibition",
     "category": "place",
     "difficulty": "medium"
   },
@@ -1604,11 +1578,7 @@
     "category": "place",
     "difficulty": "medium"
   },
-  {
-    "word": "ruins",
-    "category": "place",
-    "difficulty": "medium"
-  },
+
   {
     "word": "suburb",
     "category": "place",
@@ -1729,11 +1699,7 @@
     "category": "place",
     "difficulty": "hard"
   },
-  {
-    "word": "stronghold",
-    "category": "place",
-    "difficulty": "hard"
-  },
+ 
   {
     "word": "turret",
     "category": "place",

@@ -139,13 +139,12 @@ export class UserGuessesComponent implements OnInit {
       this.loggingService.logEvent("userGuessSubmitted", {
         guess: guess,
         isCorrect: true,
-        timeTaken: 60 - this.userGuessTimeLeft, //TODO: calculate time taken
         roundNumber: this.roundNumber,
         phase: "user-guess",
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
         guessCount: this.localWrongGuesses + 1,
-        hintUsed: this.hintUsed > 0,
+        hintUsed: this.hintUsed,
         hintGivenThisRound: this.hintGivenThisRound,
       });
 
@@ -163,13 +162,12 @@ export class UserGuessesComponent implements OnInit {
       this.loggingService.logEvent("userGuessSubmitted", {
         guess: guess,
         isCorrect: false,
-        timeTaken: 60 - this.userGuessTimeLeft, //TODO: calculate time taken
         roundNumber: this.roundNumber,
         phase: "user-guess",
         category: this.currentCategory,
         difficulty: this.currentDifficulty,
         guessCount: this.localWrongGuesses + 0,
-        hintUsed: this.hintUsed > 0,
+        hintUsed: this.hintUsed,
         hintGivenThisRound: this.hintGivenThisRound,
       });
       this.localWrongGuesses++;
@@ -177,11 +175,13 @@ export class UserGuessesComponent implements OnInit {
       this.soundService.playWrong();
 
       if (this.localWrongGuesses === 3) {
+        this.pauseTimer();
         this.loggingService.logEvent("revealAnswer", {
           correctAnswer: this.correctWord,
           roundNumber: this.roundNumber,
           category: this.currentCategory,
           phase: "user-guess",
+          hintUsed: this.hintUsed,
         });
         this.feedback =
           "You have used all your guesses! The correct word was: " +
@@ -197,20 +197,21 @@ export class UserGuessesComponent implements OnInit {
 
   getHint() {
     this.hintUsed++;
-    this.loggingService.logEvent("hintUsed", {
-      roundNumber: this.roundNumber,
-      category: this.currentCategory,
-      difficulty: this.currentDifficulty,
-      phase: "user-guess",
-      word: this.correctWord,
-      hintUsed: this.hintUsed, //toDo: hintused check (nemidunam dorose adadesh)
-    });
     this.pauseTimer();
     this.gameService.getHint(this.correctWord).subscribe((response) => {
       this.hints.push(response.hint);
       this.feedback = `Hint: ${response.hint}`;
       this.hintGivenThisRound = true;
       this.startTimer();
+      this.loggingService.logEvent("hintUsed", {
+        roundNumber: this.roundNumber,
+        category: this.currentCategory,
+        difficulty: this.currentDifficulty,
+        phase: "user-guess",
+        word: this.correctWord,
+        hintUsed: this.hintUsed,
+        hintDescription: response.hint,
+      });
       hintWordCount: response.hint.trim().split(/\s+/).length; //hint word count check chera bi range
     });
   }

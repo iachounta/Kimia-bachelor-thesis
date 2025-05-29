@@ -62,6 +62,7 @@ export class AiGuessesComponent {
       })
       .subscribe((response) => {
         this.correctWord = response.word;
+        console.log("Fetched word for user to describe:", this.correctWord);
         this.isThinking = false;
       });
   }
@@ -106,10 +107,9 @@ export class AiGuessesComponent {
         isCorrect: this.isAiGuessCorrect,
         roundNumber: this.roundNumber,
         difficulty: this.currentDifficulty,
-        timeTaken: 60 - this.aiGuessTimeLeft,
         phase: "ai-guess",
         guessCount: this.localWrongGuesses + 1,
-        wordGuessed: this.correctWord,
+        correctWord: this.correctWord,
       });
 
       if (this.isAiGuessCorrect) {
@@ -120,6 +120,7 @@ export class AiGuessesComponent {
           this.nextRound();
         }, 3000);
       } else {
+        this.timerChanged.emit({ aiGuessTimeDiff: -5 });
         this.soundService.playWrong();
         this.feedback = "❌ Wrong.";
 
@@ -153,6 +154,7 @@ export class AiGuessesComponent {
     const enhancedInput = this.userDescription + " HINT: " + this.userHint;
     this.userHint = "";
     this.isHintPhase = false;
+    this.timerChanged.emit({ aiGuessTimeDiff: -2 });
 
     this.makeAiGuess(enhancedInput);
   }

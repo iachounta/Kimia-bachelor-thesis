@@ -18,7 +18,11 @@ export class CategoryComponent {
 
   @Output() categorySelected = new EventEmitter<string>();
   categories = ["animal", "food", "place"];
-
+  categoryLabel: { [key: string]: string } = {
+    animal: "Animals",
+    food: "Food & Drinks",
+    place: "Places",
+  };
   selectCategory(category: string): void {
     if (this.categoryUsage[category] >= this.CATEGORY_LIMIT) {
       alert(
