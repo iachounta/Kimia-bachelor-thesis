@@ -38,7 +38,7 @@ export class GameComponent {
 
   CATEGORY_LIMIT = 3;
 
-  roundNumber = 15;
+  roundNumber = 1;
 
   get currentDifficulty(): string {
     if (this.roundNumber <= 6) return "easy";
