@@ -19,7 +19,7 @@ export class WinnerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.soundService.playGameOver();
+    this.soundService.playWin();
     this.loggingService.logEvent("gameWin", {
       withStats: this.gameService.userStats,
       winner: "user",

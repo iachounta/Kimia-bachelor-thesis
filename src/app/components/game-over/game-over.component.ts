@@ -26,7 +26,11 @@ export class GameOverComponent implements OnInit {
     this.roundNumber = Number(
       this.route.snapshot.queryParamMap.get("roundNumber")
     );
-    this.soundService.playGameOver();
+    if (this.reason === "ai-timeout") {
+      this.soundService.playWin();
+    } else {
+      this.soundService.playGameOver();
+    }
     this.loggingService.logEvent("gameOver", {
       reason: this.reason,
       userStats: this.gameService.userStats,

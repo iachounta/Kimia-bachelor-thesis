@@ -67,7 +67,11 @@
     <!-- Hints (alternate) -->
 
     <!-- Feedback -->
-    <div *ngIf="feedback" class="feedback" [class.correct]="isCorrect">
+    <div
+      *ngIf="feedback"
+      class="feedback hint-style"
+      [class.correct]="isCorrect"
+    >
       {{ feedback }}
     </div>
   </ng-container>

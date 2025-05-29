@@ -111,6 +111,17 @@
     background: #bbf7d0;
     color: #16a34a;
   }
+  .feedback.hint-style {
+    font-size: 1.1rem;
+    color: #22d3ee;
+    background-color: #0e172a;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    margin-top: 1rem;
+    display: inline-block;
+    box-shadow: 0 0 8px rgba(34, 211, 238, 0.3);
+    font-family: 'Orbitron', sans-serif;
+  }
   .back-button {
     margin-top: 2rem;
     text-align: center;

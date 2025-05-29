@@ -31,13 +31,13 @@ export class GameService {
   }
   userStats = { correct: 0, wrong: 0, skipped: 0 };
   aiStats = { correct: 0, wrong: 0, skipped: 0 };
-  userGuessTimeLeft = 120;
-  aiGuessTimeLeft = 120;
+  userGuessTimeLeft = 13;
+  aiGuessTimeLeft = 10;
 
   resetGame() {
     this.resetStats();
     this.userGuessTimeLeft = 120;
-    this.aiGuessTimeLeft = 120;
+    this.aiGuessTimeLeft = 2;
   }
 
   resetStats() {
