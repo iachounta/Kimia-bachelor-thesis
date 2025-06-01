@@ -22,6 +22,7 @@ export class UserGuessesComponent implements OnInit {
   hints: string[] = [];
   feedback = "";
   isCorrect = false;
+  isIncorrect = false;
 
   @Input() currentCategory: string = "";
   @Input() categoryUsage: { [key: string]: number } = {
@@ -101,6 +102,7 @@ export class UserGuessesComponent implements OnInit {
     this.hintGivenThisRound = false;
     this.feedback = "";
     this.isCorrect = false;
+    this.isIncorrect = false;
     this.localWrongGuesses = 0;
 
     const currentDifficulty = this.getCurrentDifficulty(this.roundNumber);
@@ -153,6 +155,7 @@ export class UserGuessesComponent implements OnInit {
       this.timerChanged.emit({ userGuessTimeDiff: 10 });
       this.feedback = "Correct! +10 seconds ⏱️";
       this.isCorrect = true;
+      this.isIncorrect = false;
 
       setTimeout(() => {
         this.currentCategory = "";
@@ -173,6 +176,8 @@ export class UserGuessesComponent implements OnInit {
       this.localWrongGuesses++;
       this.gameService.userStats.wrong++;
       this.soundService.playWrong();
+      this.isCorrect = false;
+      this.isIncorrect = true;
 
       if (this.localWrongGuesses === 3) {
         this.pauseTimer();

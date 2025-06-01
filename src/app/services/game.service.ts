@@ -19,7 +19,8 @@ interface HintResponse {
   providedIn: "root",
 })
 export class GameService {
-  private apiUrl = "http://localhost:5001";
+  private apiUrl =
+    "https://backend2.thankfulpond-69fac1dd.westeurope.azurecontainerapps.io";
 
   constructor(private http: HttpClient) {}
 
@@ -31,13 +32,13 @@ export class GameService {
   }
   userStats = { correct: 0, wrong: 0, skipped: 0 };
   aiStats = { correct: 0, wrong: 0, skipped: 0 };
-  userGuessTimeLeft = 13;
-  aiGuessTimeLeft = 10;
+  userGuessTimeLeft = 100;
+  aiGuessTimeLeft = 100;
 
   resetGame() {
     this.resetStats();
-    this.userGuessTimeLeft = 120;
-    this.aiGuessTimeLeft = 2;
+    this.userGuessTimeLeft = 100;
+    this.aiGuessTimeLeft = 100;
   }
 
   resetStats() {

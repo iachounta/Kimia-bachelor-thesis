@@ -70,7 +70,7 @@
     <div
       *ngIf="feedback"
       class="feedback hint-style"
-      [class.correct]="isCorrect"
+      [ngClass]="isCorrect ? 'correct' : 'incorrect'"
     >
       {{ feedback }}
     </div>
