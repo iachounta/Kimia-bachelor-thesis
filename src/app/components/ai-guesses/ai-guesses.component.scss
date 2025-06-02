@@ -154,14 +154,27 @@ button {
 .feedback {
   padding: 1rem;
   border-radius: 8px;
+  margin-top: 1rem;
   text-align: center;
   font-weight: 500;
-  background: transparent;
-  color: #ff7a7a;
-  border: 2px solid;
+  /* background and color styles are now handled by specific classes */
 }
-
-
-
-
-
+.feedback.correct {
+  background: #bbf7d0;
+  color: #16a34a;
+}
+.feedback.incorrect {
+  background: #fecaca;
+  color: #dc2626;
+}
+.feedback.hint-style {
+  font-size: 1.1rem;
+  /* color: #22d3ee; */
+  background-color: #0e172a;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  display: inline-block;
+  box-shadow: 0 0 8px rgba(34, 211, 238, 0.3);
+  font-family: 'Orbitron', sans-serif;
+}

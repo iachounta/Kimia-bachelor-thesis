@@ -4,7 +4,8 @@ import { HttpClient } from "@angular/common/http";
 
 @Injectable({ providedIn: "root" })
 export class LoggingService {
-  private endpoint = "http://localhost:5001/api/log";
+  private endpoint =
+    "https://backend2.thankfulpond-69fac1dd.westeurope.azurecontainerapps.io/api/log";
   constructor(private http: HttpClient) {}
 
   logEvent(event: string, details: any) {

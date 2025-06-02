@@ -33,7 +33,8 @@
       >
         {{ localWrongGuesses === 0 ? "Let AI Guess" : "Guess Again" }}
       </button>
-      <button class="hint-button"
+      <button
+        class="hint-button"
         (click)="handleSkip()"
         [hidden]="localWrongGuesses !== 0 || isThinking"
       >
@@ -74,7 +75,11 @@
     AI's guess: {{ aiGuess }}
   </div>
 
-  <div *ngIf="feedback" class="feedback">
+  <div
+    *ngIf="feedback"
+    class="feedback hint-style"
+    [ngClass]="isAiGuessCorrect ? 'correct' : 'incorrect'"
+  >
     {{ feedback }}
   </div>
 
