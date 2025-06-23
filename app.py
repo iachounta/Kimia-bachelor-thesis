@@ -36,7 +36,7 @@ def llm_complete(prompt: str, *, temperature: float = 0.7,
     response = requests.post(
         "http://ollama:11434/api/chat",
         json={
-            "model": "llama2",
+            "model": "gemma:2b",
             "messages": [
                 {"role": "system", "content": "You are a helpful, playful word-game master."},
                 {"role": "user", "content": prompt}
