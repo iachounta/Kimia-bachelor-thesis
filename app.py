@@ -1,4 +1,5 @@
 import os
+import requests
 import json
 import random
 
@@ -9,39 +10,44 @@ from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
 
 
-from azure.ai.inference import ChatCompletionsClient
-from azure.ai.inference.models import SystemMessage, UserMessage
-from azure.core.credentials import AzureKeyCredential
+
+#from azure.ai.inference import ChatCompletionsClient
+#from azure.ai.inference.models import SystemMessage, UserMessage
+#from azure.core.credentials import AzureKeyCredential
 load_dotenv()
 
-endpoint = os.getenv("AZURE_INFERENCE_SDK_ENDPOINT", "https://ai-kimiabeheshti974756ai333821514357.services.ai.azure.com/models")
-model_name = os.getenv("DEPLOYMENT_NAME", "Llama-4-Maverick-17B-128E-Instruct-FP8")
-key = os.getenv("AZURE_INFERENCE_SDK_KEY", "")
-client = ChatCompletionsClient(endpoint=endpoint, credential=AzureKeyCredential(key))
+#endpoint = os.getenv("AZURE_INFERENCE_SDK_ENDPOINT", "https://ai-kimiabeheshti974756ai333821514357.services.ai.azure.com/models")
+#model_name = os.getenv("DEPLOYMENT_NAME", "Llama-4-Maverick-17B-128E-Instruct-FP8")
+#key = os.getenv("AZURE_INFERENCE_SDK_KEY", "")
+#client = ChatCompletionsClient(endpoint=endpoint, credential=AzureKeyCredential(key))
 
-client = ChatCompletionsClient(
-    endpoint=endpoint,
-    credential=AzureKeyCredential(key),
+#client = ChatCompletionsClient(
+   # endpoint=endpoint,
+  #  credential=AzureKeyCredential(key),
    
-)
+#)
 
 
 def llm_complete(prompt: str, *, temperature: float = 0.7,
                  top_p: float = 0.9, max_tokens: int = 256) -> str:
     """
-    Simple helper around ChatCompletionsClient.complete().
-    Returns the assistant's text with leading/trailing whitespace removed.
+    Simple helper to call a locally running Ollama model.
     """
-    response = client.complete(
-        messages=[
-            SystemMessage(content="You are a helpful, playful word-game master."),
-            UserMessage(content=prompt)
-        ],
-        model=model_name,
-        temperature=temperature,
-        top_p=top_p,
-        max_tokens=max_tokens,
+    response = requests.post(
+        "http://ollama:11434/api/chat",
+        json={
+            "model": "llama2",
+            "messages": [
+                {"role": "system", "content": "You are a helpful, playful word-game master."},
+                {"role": "user", "content": prompt}
+            ],
+            "temperature": temperature,
+            "top_p": top_p,
+            "max_tokens": max_tokens
+        }
     )
+    response.raise_for_status()
+    return response.json()["message"]["content"].strip()
     
     return response.choices[0].message.content.strip()
 
