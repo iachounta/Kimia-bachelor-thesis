@@ -35,7 +35,6 @@ export class GameOverComponent implements OnInit {
       reason: this.reason,
       userStats: this.gameService.userStats,
       aiStats: this.gameService.aiStats,
-      //roundNumber: this.gameService.roundNumber, //TODO: what is the issue with this? mikham moghe game over round number biad hatman
       winner: this.reason === "ai-timeout" ? "user" : "ai",
       aiTimeLeft: this.gameService.aiGuessTimeLeft,
       userTimeLeft: this.gameService.userGuessTimeLeft,

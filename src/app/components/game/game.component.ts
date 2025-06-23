@@ -68,7 +68,6 @@ export class GameComponent {
 
       this.playWinSound();
       this.playApplauseSound();
-      // You might want to route here if using Angular Router, for example:
       this.router.navigate(["/winner"]);
     }
   }

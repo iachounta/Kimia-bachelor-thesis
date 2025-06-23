@@ -20,7 +20,8 @@ interface HintResponse {
 })
 export class GameService {
   private apiUrl =
-    "https://backend2.thankfulpond-69fac1dd.westeurope.azurecontainerapps.io";
+    //"https://backend2.thankfulpond-69fac1dd.westeurope.azurecontainerapps.io";
+    "/llm-api";
 
   constructor(private http: HttpClient) {}
 

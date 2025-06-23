@@ -22,13 +22,7 @@ const routes: Routes = [
   selector: "app-root",
   template: `<router-outlet></router-outlet>`,
   standalone: true,
-  imports: [
-    RouterOutlet,
-    //LoginComponent,
-    //GameModeSelectionComponent,
-    //GameComponent,
-    //WinnerComponent
-  ],
+  imports: [RouterOutlet],
 })
 export class App {}
 

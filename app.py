@@ -8,7 +8,7 @@ from pymongo import MongoClient
 from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
 
-# ------------ Azure AI Inference set-up ------------------------------------
+
 from azure.ai.inference import ChatCompletionsClient
 from azure.ai.inference.models import SystemMessage, UserMessage
 from azure.core.credentials import AzureKeyCredential
@@ -22,10 +22,10 @@ client = ChatCompletionsClient(endpoint=endpoint, credential=AzureKeyCredential(
 client = ChatCompletionsClient(
     endpoint=endpoint,
     credential=AzureKeyCredential(key),
-    #credential_scopes=["https://cognitiveservices.azure.com/.default"],
+   
 )
 
-# Helper that wraps one call to the model -----------------------------------
+
 def llm_complete(prompt: str, *, temperature: float = 0.7,
                  top_p: float = 0.9, max_tokens: int = 256) -> str:
     """
@@ -42,15 +42,15 @@ def llm_complete(prompt: str, *, temperature: float = 0.7,
         top_p=top_p,
         max_tokens=max_tokens,
     )
-    # `response.choices[0].message.content` is the model’s reply :contentReference[oaicite:0]{index=0}
+    
     return response.choices[0].message.content.strip()
 
 
-# ------------ Flask & game logic -------------------------------------------
+
 app = Flask(__name__)
 CORS(app)
 
-# Load the curated word list once at start-up
+
 with open("all_words.json", "r", encoding="utf-8") as fh:
     WORD_DATA = json.load(fh)
 
@@ -66,7 +66,7 @@ def start_game():
     difficulty = data.get("difficulty", "easy")
     category = data.get("category", "animal")
 
-    # Pick a word matching difficulty & category
+    
     candidates = [
         item["word"]
         for item in WORD_DATA
@@ -78,7 +78,7 @@ def start_game():
 
     secret_word = random.choice(candidates)
 
-    # Build the prompt
+    
     prompt = f"""
 You are a professional word game master. Your task is to describe a secret word so that a human can guess it—but without using the word itself, parts of the word, or direct synonyms.
 
@@ -156,7 +156,6 @@ Rules:
     return jsonify({"hint": hint})
 
 
-# ------------ MongoDB logging endpoint -------------------------------------
 DB_PASSWORD = os.getenv("DB_PASSWORD")
 MONGO_URI = (
     f"mongodb+srv://llm-game-db-user:{DB_PASSWORD}"
@@ -164,7 +163,7 @@ MONGO_URI = (
 )
 
 mongo_client = MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
-logs_collection = mongo_client["word_game"]["logs"]
+logs_collection = mongo_client["word_game"]["logs2"]
 
 
 @app.post("/api/log")
@@ -173,6 +172,5 @@ def log_event():
     return {"status": "success"}, 201
 
 
-# ------------ Run the Flask app --------------------------------------------
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001, debug=True)
