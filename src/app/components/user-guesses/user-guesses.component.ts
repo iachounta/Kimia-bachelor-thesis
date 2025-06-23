@@ -222,7 +222,7 @@ export class UserGuessesComponent implements OnInit {
   }
 
   goBack() {
-    window.location.href = "/";
+    window.location.href = "/llm-wordgame";
   }
 
   handleSkip() {

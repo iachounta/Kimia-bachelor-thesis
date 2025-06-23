@@ -171,7 +171,7 @@ export class AiGuessesComponent {
   }
 
   goBack() {
-    window.location.href = "/";
+    window.location.href = "/llm-wordgame";
   }
 
   startTimer() {
