@@ -2,14 +2,21 @@ import os
 import requests
 import json
 import random
-
+import logging
+import ollama
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from pymongo import MongoClient
 from azure.core.credentials import AzureKeyCredential
 from dotenv import load_dotenv
-
-
+os.environ['OLLAMA_HOST'] = 'http://ollama:11434'
+logger.info("Starting application")
 
 #from azure.ai.inference import ChatCompletionsClient
 #from azure.ai.inference.models import SystemMessage, UserMessage
@@ -33,23 +40,21 @@ def llm_complete(prompt: str, *, temperature: float = 0.7,
     """
     Simple helper to call a locally running Ollama model.
     """
-    response = requests.post(
-        "http://ollama:11434/api/chat",
-        json={
-            "model": "gemma:2b",
-            "messages": [
-                {"role": "system", "content": "You are a helpful, playful word-game master."},
-                {"role": "user", "content": prompt}
-            ],
+    logger.info(f"Calling LLM with prompt: {prompt[:50]}... (truncated for logging)")
+    response = ollama.chat(
+        model='llama4:maverick',
+        messages=[
+            {"role": "system", "content": "You are a helpful, playful word-game master."},
+            {"role": "user", "content": prompt}
+        ],
+        options={
             "temperature": temperature,
             "top_p": top_p,
-            "max_tokens": max_tokens
+            "num_predict": max_tokens
         }
     )
-    response.raise_for_status()
-    return response.json()["message"]["content"].strip()
-    
-    return response.choices[0].message.content.strip()
+
+    return response['message']['content'].strip()
 
 
 
