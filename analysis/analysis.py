@@ -105,7 +105,7 @@ top_renamed.plot(kind="pie",
          counterclock=False,
          ylabel="",
          pctdistance=0.85)  # Pulls % labels slightly outside the pie
-plt.title("Distribution of Key Event Types Across All Sessions")
+plt.title("Distribution of Key Event Types Across All Sessions", loc='left', x=0.3)
 plt.legend(labels=top_renamed.index.tolist(), title="Event Types", loc="center left", bbox_to_anchor=(1, 0.5))
 plt.tight_layout()
 plt.savefig("event_distribution.pdf", dpi=300)
