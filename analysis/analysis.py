@@ -94,21 +94,25 @@ label_map = {
 # Re-label the series
 top_renamed = top.rename(index=label_map)
 
-def format_pct(pct):
-    return f"{pct:.1f}%" if pct > 1 else ""
+# Plot as bar chart
+plt.figure(figsize=(8, 5))
+ax = plt.gca()
+bars = ax.bar(top_renamed.index, top_renamed.values)
+ax.set_ylabel("Event Count")
+ax.set_title("Distribution of Key Event Types Across All Sessions")
+ax.set_xticklabels(top_renamed.index, rotation=45, ha='right')
 
-plt.figure(figsize=(6, 6))
-top_renamed.plot(kind="pie",
-         labels=None,
-         autopct="%1.1f%%",
-         startangle=90,
-         counterclock=False,
-         ylabel="",
-         pctdistance=0.85)  # Pulls % labels slightly outside the pie
-plt.title("Distribution of Key Event Types Across All Sessions", loc='left', x=0.3)
-plt.legend(labels=top_renamed.index.tolist(), title="Event Types", loc="center left", bbox_to_anchor=(1, 0.5))
+y_max = max(top_renamed.values) * 1.10  # Add 10% headroom
+ax.set_ylim(0, y_max)
+
+for bar in bars:
+    height = bar.get_height()
+    ax.annotate(f'{height}', xy=(bar.get_x() + bar.get_width() / 2, height),
+                xytext=(0, 3), textcoords="offset points", ha='center', va='bottom')
+
 plt.tight_layout()
-plt.savefig("event_distribution.pdf", dpi=300)
+plt.savefig("event_distribution_barplot.pdf", dpi=300)
+
 
 # ------------- 4. Rounds Played Per Session ---------------------------
 all_rounds = df[(df["event"] == "newRoundStarted")]
@@ -116,15 +120,15 @@ rounds_per_session = all_rounds.groupby("sessionId").size()
 dist = rounds_per_session.value_counts().sort_index()
 
 plt.figure(figsize=(6, 4))
-ax4 = dist.plot(kind="bar")
-ax4.set_xlabel("Rounds in one session")
-ax4.set_ylabel("Number of sessions")
-ax4.set_title("Rounds Played Per Session")
-ax4.yaxis.set_major_locator(MaxNLocator(integer=True))
-
-#add_bar_labels(ax4)
+plt.hist(rounds_per_session, bins=range(0, rounds_per_session.max() + 5, 5), edgecolor="black", rwidth=0.9)
+plt.xlabel("Rounds per session (binned)")
+plt.ylabel("Number of sessions")
+plt.title("Distribution of Rounds Played Per Session")
+plt.gca().yaxis.set_major_locator(MaxNLocator(integer=True))  # Force integer y-ticks
 plt.tight_layout()
-plt.savefig("rounds_played.pdf", dpi=300)
+plt.savefig("rounds_played_hist.pdf", dpi=300)
+
+
 
 # ------------- Show all figures ---------------------------------------
 
