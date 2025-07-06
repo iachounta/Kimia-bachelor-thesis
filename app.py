@@ -98,7 +98,7 @@ Its category is: {category}
 
 Write a short and clear description that matches the following rules:
 - Start with: "I have a word in my mind. Let me explain it to you!"
-- Use very simple vocabulary (English B1 level).
+- Use very simple vocabulary.
 - Write 3 to 4 sentences. Around 50 words.
 - Do not use the secret word, any part of it, or its direct synonyms.
 - Do not ask questions or use sound effects.
@@ -167,19 +167,19 @@ Rules:
     return jsonify({"hint": hint})
 
 
-DB_PASSWORD = os.getenv("DB_PASSWORD")
-MONGO_URI = (
-    f"mongodb+srv://llm-game-db-user:{DB_PASSWORD}"
-    "@cluster0.mvqxy54.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-)
+# DB_PASSWORD = os.getenv("DB_PASSWORD")
+# MONGO_URI = (
+#     f"mongodb+srv://llm-game-db-user:{DB_PASSWORD}"
+#     "@cluster0.mvqxy54.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+# )
 
-mongo_client = MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
-logs_collection = mongo_client["word_game"]["logs2"]
+# mongo_client = MongoClient(MONGO_URI, tlsAllowInvalidCertificates=True)
+# logs_collection = mongo_client["word_game"]["logs2"]
 
 
 @app.post("/api/log")
 def log_event():
-    logs_collection.insert_one(request.get_json(force=True))
+    # logs_collection.insert_one(request.get_json(force=True))
     return {"status": "success"}, 201
 
 
