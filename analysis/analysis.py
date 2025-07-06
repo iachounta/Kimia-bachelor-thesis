@@ -153,6 +153,61 @@ session_durations_min = (
 )
 mean_active_minutes = session_durations_min.mean()
 
+
+# Group by user ID and count total rounds played per user
+rounds_per_user = all_rounds.groupby("sessionId").size()
+avg_rounds_user = rounds_per_user.mean()
+std_rounds_user = rounds_per_user.std()
+
+# Active duration per user in minutes
+user_durations_min = (
+    df.groupby("sessionId")["ts"]
+      .apply(lambda g: (g.max() - g.min()).total_seconds() / 60)
+)
+avg_duration_user = user_durations_min.mean()
+std_duration_user = user_durations_min.std()
+
+
+# Calculate active session durations (in minutes)
+session_durations_min = (
+    df.groupby("sessionId")["ts"]
+      .apply(lambda g: (g.max() - g.min()).total_seconds() / 60)
+)
+
+# --- Exclude outliers using IQR ---
+Q1 = session_durations_min.quantile(0.25)
+Q3 = session_durations_min.quantile(0.75)
+IQR = Q3 - Q1
+
+# Define bounds for non-outlier range
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+# Filter out outliers
+filtered_durations = session_durations_min[
+    (session_durations_min >= lower_bound) &
+    (session_durations_min <= upper_bound)
+]
+
+# Calculate new mean and std dev
+mean_filtered_duration = filtered_durations.mean()
+std_filtered_duration  = filtered_durations.std()
+
+# Print result
+print(f"• Mean active session duration (no outliers): {mean_filtered_duration:.2f} minutes")
+print(f"• Std. deviation of session duration (no outliers): {std_filtered_duration:.2f} minutes")
+
+
+print("\nPer-user engagement stats:")
+print(f"• Average rounds played per user: {avg_rounds_user:.2f}")
+print(f"• Standard deviation of rounds played per user: {std_rounds_user:.2f}")
+print(f"• Average active session duration per user: {avg_duration_user:.2f} minutes")
+print(f"• Standard deviation of session duration per user: {std_duration_user:.2f} minutes")
+
+
+play_again_users = df[df["event"] == "playAgainClicked"]["sessionId"].nunique()
+print(f"• {play_again_users} unique users clicked on 'Play Again'")
+
 # print human-readable summary
 print("\nObjective engagement data from the 15 sessions included the following:")
 print(f"• {total_rounds} rounds played across all users.")
