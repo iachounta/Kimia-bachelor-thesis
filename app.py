@@ -42,7 +42,7 @@ def llm_complete(prompt: str, *, temperature: float = 0.7,
     """
     logger.info(f"Calling LLM with prompt: {prompt[:50]}... (truncated for logging)")
     response = ollama.chat(
-        model='llama4:maverick',
+        model='gemma:1b',
         messages=[
             {"role": "system", "content": "You are a helpful, playful word-game master."},
             {"role": "user", "content": prompt}
