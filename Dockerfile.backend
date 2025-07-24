@@ -4,7 +4,6 @@ WORKDIR /app
 COPY app.py .
 COPY requirements.txt .
 COPY all_words.json .
-COPY .env .
 RUN pip install --no-cache-dir -r requirements.txt
 
 CMD ["python", "app.py"]
