@@ -10,4 +10,4 @@ while [ "$(ollama list | grep 'NAME')" == "" ]; do
 done
 
 echo "Running model..."
-ollama run llama4:maverick
+ollama run gemma3:1b
